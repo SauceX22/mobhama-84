@@ -5,7 +5,6 @@ import GitHubProvider from "next-auth/providers/github"
 import { env } from "@/env.mjs"
 import { db } from "@/lib/db"
 
-
 export const authOptions: NextAuthOptions = {
   // huh any! I know.
   // This is a temporary fix for prisma client.
