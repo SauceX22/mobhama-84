@@ -5,12 +5,21 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "db:push": "prisma db push",
-    "db:studio": "prisma studio",
+    "db:push": "npx prisma db push",
+    "db:studio": "npx prisma studio",
     "dev": "next dev",
-    "postinstall": "prisma generate",
+    "postinstall": "npx prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "format": "npx prettier --write",
+    "seed": "npx prisma db seed",
+    "validate": "npx prisma validate",
+    "reset": "npx prisma migrate reset --force && npx prisma db seed && npx prisma generate",
+    "push": "npx prisma db push",
+    "migrate": "npx prisma migrate dev",
+    "generate": "npx prisma generate",
+    "studio": "npx prisma studio",
+    "generate-teams": "ts-node --project tsconfig.prisma.json prisma/generate-teams.ts"
   },
   "dependencies": {
     "@editorjs/code": "^2.9.0",
