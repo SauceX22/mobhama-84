@@ -27,6 +27,7 @@ interface RootLayoutProps {
 }
 
 export const metadata = {
+  metadataBase: new URL(`http://localhost:${process.env.PORT ?? 3000}`),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
