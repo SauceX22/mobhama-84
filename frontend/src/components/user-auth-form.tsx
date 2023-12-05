@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
+import type * as z from "zod"
 
 import { cn } from "@/lib/utils"
 import { userAuthSchema } from "@/lib/validations/auth"
@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>
 
 type FormData = z.infer<typeof userAuthSchema>
 
@@ -37,7 +37,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     const signInResult = await signIn("email", {
       email: data.email.toLowerCase(),
       redirect: false,
-      callbackUrl: searchParams?.get("from") || "/dashboard",
+      callbackUrl: searchParams?.get("from") ?? "/dashboard",
     })
 
     setIsLoading(false)
@@ -103,7 +103,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         className={cn(buttonVariants({ variant: "outline" }))}
         onClick={() => {
           setIsGitHubLoading(true)
-          signIn("github")
+          void signIn("github")
         }}
         disabled={isLoading || isGitHubLoading}
       >
