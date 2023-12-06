@@ -1,14 +1,14 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { env } from "@/env.mjs"
-import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import TimeTable from "@/app/(marketing)/_components/timetable";
 
 export default async function IndexPage() {
   return (
     <>
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
+        <TimeTable />
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
           <Link
             href="#"
@@ -168,5 +168,5 @@ export default async function IndexPage() {
         </div>
       </section>
     </>
-  )
+  );
 }

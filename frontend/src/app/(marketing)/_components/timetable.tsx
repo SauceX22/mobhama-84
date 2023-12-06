@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { type Event } from "@/types/event";
@@ -37,7 +38,7 @@ const TimeTable: React.FC = () => {
             {generateEventsForDay(day)}
           </div>
           {/* Rows for the day */}
-          <div className="absolute z-0 box-border w-full border-x border-b border-gray-400 opacity-30">
+          <div className="absolute z-0 box-border w-full min-w-fit border-x border-b border-gray-400 opacity-30">
             {generateDayRows()}
           </div>
         </div>
@@ -142,11 +143,11 @@ const TimeTable: React.FC = () => {
 
   return (
     <div
-      className="container m-4 flex flex-col rounded-lg border border-foreground bg-transparent p-6 outline-none"
+      className="m-4 flex w-full  flex-col rounded-lg border border-foreground bg-transparent p-6 outline-none"
       role="tabpanel"
       tabIndex={0}
     >
-      <div className="flex h-full min-h-fit w-full min-w-fit overflow-x-scroll">
+      <div className="flex h-fit w-full min-w-fit overflow-visible">
         <div className="sticky left-0 z-10 flex h-full w-16 min-w-[54px] select-none flex-col rounded-t-lg rounded-bl-lg bg-primary p-2 text-primary-foreground">
           {generateTimeSlots()}
         </div>
