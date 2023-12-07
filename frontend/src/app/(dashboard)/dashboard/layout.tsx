@@ -1,24 +1,24 @@
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation";
 
-import { dashboardConfig } from "@/config/dashboard"
-import { getCurrentUser } from "@/lib/session"
-import { MainNav } from "@/components/main-nav"
-import { DashboardNav } from "@/components/nav"
-import { SiteFooter } from "@/components/site-footer"
-import { UserAccountNav } from "@/components/user-account-nav"
+import { dashboardConfig } from "@/config/dashboard";
+import { getCurrentUser } from "@/lib/session";
+import { MainNav } from "@/components/main-nav";
+import { DashboardNav } from "@/components/nav";
+import { SiteFooter } from "@/components/site-footer";
+import { UserAccountNav } from "@/components/user-account-nav";
 
 interface DashboardLayoutProps {
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
 
   if (!user) {
-    return notFound()
+    return redirect("/login");
   }
 
   return (
@@ -45,5 +45,5 @@ export default async function DashboardLayout({
       </div>
       <SiteFooter className="border-t" />
     </div>
-  )
+  );
 }
