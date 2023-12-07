@@ -1,7 +1,8 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { type NextAuthOptions } from "next-auth"
 import { db } from "@/lib/db"
-
+import GitHubProvider from "next-auth/providers/github"
+import { env } from "@/env.mjs"
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
  *
@@ -13,14 +14,14 @@ export const authOptions: NextAuthOptions = {
   // This is a temporary fix for prisma client.
   // @see https://github.com/prisma/prisma/issues/16117
   adapter: PrismaAdapter(db),
-  session: {
-    strategy: "jwt",
-  },
   pages: {
     signIn: "/login",
   },
   providers: [
-
+    GitHubProvider({
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
   ],
   callbacks: {
     async session({ token, session }) {
@@ -32,27 +33,6 @@ export const authOptions: NextAuthOptions = {
       }
 
       return session
-    },
-    async jwt({ token, user }) {
-      const dbUser = await db.user.findFirst({
-        where: {
-          email: token.email,
-        },
-      })
-
-      if (!dbUser) {
-        if (user) {
-          token.id = user?.id
-        }
-        return token
-      }
-
-      return {
-        id: dbUser.id,
-        name: dbUser.name,
-        email: dbUser.email,
-        picture: dbUser.image,
-      }
     },
   },
 }
