@@ -14,7 +14,6 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const user = await getCurrentUser();
 
   if (!user) {

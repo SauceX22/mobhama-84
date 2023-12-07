@@ -1,29 +1,29 @@
-import { redirect } from "next/navigation"
+import { redirect } from "next/navigation";
 
-import { authOptions } from "@/lib/auth"
-import { getServerAuthSession } from "@/lib/session"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { authOptions } from "@/lib/auth";
+import { getServerAuthSession } from "@/lib/session";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { DashboardHeader } from "@/components/header"
-import { Icons } from "@/components/icons"
-import { DashboardShell } from "@/components/shell"
+} from "@/components/ui/card";
+import { DashboardHeader } from "@/components/header";
+import { Icons } from "@/components/icons";
+import { DashboardShell } from "@/components/shell";
 
 export const metadata = {
   title: "Billing",
   description: "Manage billing and your subscription plan.",
-}
+};
 
 export default async function BillingPage() {
-  const user = await getServerAuthSession()
+  const user = await getServerAuthSession();
 
   if (!user) {
-    redirect(authOptions?.pages?.signIn ?? "/login")
+    redirect("/login");
   }
 
   return (
@@ -53,5 +53,5 @@ export default async function BillingPage() {
         BillingForm{" "}
       </div>
     </DashboardShell>
-  )
+  );
 }
