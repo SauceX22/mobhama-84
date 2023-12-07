@@ -1,6 +1,6 @@
 import React from "react";
 import { type Event } from "@/types/event";
-import { Icons } from "../../../components/icons";
+import { Icons } from "./icons";
 
 const TableItem = ({ event }: { event: Event }) => {
   return (

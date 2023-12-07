@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { type Event } from "@/types/event";
-import TableItem from "@/app/(marketing)/_components/table-item";
+import TableItem from "@/components/table-item";
 
 const days = ["SUN", "MON", "TUE", "WED", "THU"];
 
