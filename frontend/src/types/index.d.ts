@@ -1,6 +1,8 @@
 import { User } from "@prisma/client"
 
-import { Icons } from "@/components/icons"
+import { type Icons } from "@/components/icons"
+
+export { Project } from "./temp-types"
 
 export type NavItem = {
   title: string
