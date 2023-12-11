@@ -1,0 +1,54 @@
+package com.example.Project;
+
+import java.util.UUID;
+
+abstract public class User {
+    protected String name;
+    protected String id;
+    protected String PhoneNum;
+    protected String email;
+    
+
+    public User(){
+        this("","","", "");
+    }
+    public User(String name, String PhoneNum, String email, String id){
+        this.name = name;
+        this.PhoneNum = PhoneNum;
+        this.email = email;
+        this.id = id;
+    }
+    public void createID(){
+        this.id = UUID.randomUUID().toString();
+    }
+    public void signIn(){
+        
+    }
+    public String getId(){
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNum() {
+        return PhoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        PhoneNum = phoneNum;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
