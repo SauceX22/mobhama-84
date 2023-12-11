@@ -33,6 +33,8 @@ import {
   FaTimes as X,
   FaYoutube as Youtube,
   FaHome as Home,
+  FaTasks as Tasks,
+  FaUsers as Users,
 } from "react-icons/fa";
 import { IoSunnyOutline as Sun } from "react-icons/io5";
 
@@ -92,4 +94,6 @@ export const Icons = {
   youtube: Youtube as Icon,
   whatsapp: WhatsappIcon as Icon,
   logOut: LogOut as Icon,
+  tasks: Tasks as Icon,
+  users: Users as Icon,
 };
