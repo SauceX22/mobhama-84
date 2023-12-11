@@ -21,6 +21,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
   return (
     <nav className="grid items-start gap-2">
       {items.map((item, index) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const Icon = Icons[item.icon ?? "arrowRight"];
         return (
           item.href && (
