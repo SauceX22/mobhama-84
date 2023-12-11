@@ -42,14 +42,11 @@ EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
   }
 
   return (
-    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-      <Icon className={cn("h-10 w-10", className)} {...props} />
-    </div>
+    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted"></div>
   );
 };
 
-interface EmptyPlacholderTitleProps
-  extends React.HTMLAttributes<HTMLHeadingElement> {}
+type EmptyPlacholderTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
 
 EmptyPlaceholder.Title = function EmptyPlaceholderTitle({
   className,
@@ -60,8 +57,8 @@ EmptyPlaceholder.Title = function EmptyPlaceholderTitle({
   );
 };
 
-interface EmptyPlacholderDescriptionProps
-  extends React.HTMLAttributes<HTMLParagraphElement> {}
+type EmptyPlacholderDescriptionProps =
+  React.HTMLAttributes<HTMLParagraphElement>;
 
 EmptyPlaceholder.Description = function EmptyPlaceholderDescription({
   className,
