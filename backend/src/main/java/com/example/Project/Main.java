@@ -1,5 +1,7 @@
 package com.example.Project;
 
+import java.util.ArrayList;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,16 @@ public class Main {
            return ResponseEntity.ok(userInfo);
         }else {
            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @RequestMapping("/getTeams")
+    public ResponseEntity<ArrayList<Team>> getTeams(@RequestParam String userId) {
+        ArrayList<Team> teams = DataBase.getUserTeams(userId);
+        if (teams != null) {
+            return ResponseEntity.ok(teams);
+        }else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 

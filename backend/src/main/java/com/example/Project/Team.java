@@ -1,14 +1,17 @@
 package com.example.Project;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Team {
     private String name;
+    private String id;
     private ArrayList<User> members;
     private ArrayList<Project> projects;
-    Team(String name){
+    Team(String name, String id){
         this();
         this.name = name;
+        this.id = id;
     }
     Team() {
         this.members = new ArrayList<User>();
@@ -32,7 +35,7 @@ public class Team {
     }
     
     public static Team create(String name){
-        return new Team(name);
+        return new Team(name, UUID.randomUUID().toString());
     }
     public static Team create(){
         return new Team();
