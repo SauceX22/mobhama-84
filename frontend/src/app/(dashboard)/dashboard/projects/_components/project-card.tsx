@@ -9,15 +9,16 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "lucide-react";
 import React from "react";
 import { type Project } from "@/types";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Props = React.HTMLAttributes<HTMLDivElement> & { project: Project };
 
 const ProjectCard = ({ project, ...props }: Props) => {
+  const router = useRouter();
   return (
     <Card
       className="w-full min-w-max transition-colors hover:cursor-pointer hover:bg-secondary"
-      onClick={redirect(`/dashboard/projects/${project.id}`)}
+      onClick={() => router.push(`/dashboard/projects/${project.id}`)}
     >
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>{project.title}</CardTitle>
