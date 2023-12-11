@@ -4,7 +4,7 @@ import { getCurrentUser } from "@/lib/session";
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import ProjectCard from "@/app/(dashboard)/dashboard/projects/_components/project-card";
-import { type Project } from "@/types";
+import { type Project } from "@/server/api";
 
 export const metadata = {
   title: "Projects",
