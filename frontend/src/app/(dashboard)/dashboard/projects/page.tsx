@@ -33,6 +33,41 @@ const projects: Project[] = [
     description: "Description of Project C.",
     owner: "Project Owner C",
   },
+  {
+    id: "item4",
+    title: "Project D",
+    avatarFallback: "PD",
+    description: "Description of Project D.",
+    owner: "Project Owner D",
+  },
+  {
+    id: "item5",
+    title: "Project E",
+    avatarFallback: "PE",
+    description: "Description of Project E.",
+    owner: "Project Owner E",
+  },
+  {
+    id: "item6",
+    title: "Project F",
+    avatarFallback: "PF",
+    description: "Description of Project F.",
+    owner: "Project Owner F",
+  },
+  {
+    id: "item7",
+    title: "Project G",
+    avatarFallback: "PG",
+    description: "Description of Project G.",
+    owner: "Project Owner G",
+  },
+  {
+    id: "item8",
+    title: "Project H",
+    avatarFallback: "PH",
+    description: "Description of Project H.",
+    owner: "Project Owner H",
+  },
 ];
 
 export default async function ProjectsPage() {
