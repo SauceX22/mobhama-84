@@ -8,10 +8,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "lucide-react";
 import React from "react";
 import { type Project } from "@/types";
 import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
 
 type Props = React.HTMLAttributes<HTMLDivElement> & { project: Project };
 
