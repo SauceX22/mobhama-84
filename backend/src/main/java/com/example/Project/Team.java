@@ -7,21 +7,26 @@ public class Team {
     private String name;
     private String id;
     private ArrayList<User> members;
-    private ArrayList<Project> projects;
+    private ArrayList<String> projectIds;
+
     Team(String name, String id){
         this();
         this.name = name;
         this.id = id;
     }
+
     Team() {
         this.members = new ArrayList<User>();
-        this.projects = new ArrayList<Project>();
+        this.projectIds = new ArrayList<String>();
     }
+
     public String getName(){
         return name;
     }
+
     public void setName(String name){
         this.name = name;
+    
     }
     public void setMembers(ArrayList<User> members) {
         this.members = members;
@@ -30,16 +35,18 @@ public class Team {
         return members;
     }
 
-    public ArrayList<Project> getProjects() {
-        return projects;
+    public ArrayList<String> getProjectIds() {
+        return projectIds;
     }
     
     public static Team create(String name){
         return new Team(name, UUID.randomUUID().toString());
     }
+
     public static Team create(){
         return new Team();
     }
+
     public void delete() {
 
     }
@@ -50,9 +57,12 @@ public class Team {
         members.remove(member);
     }
     public void addProject(Project project){
-        projects.add(project);
+        projectIds.add(project.getProjectId());
     }
     public void removeProject(Project project){
-        projects.remove(project);
+        projectIds.remove(project.getProjectId());
+    }
+    public String getId(){
+        return id;
     }
 }

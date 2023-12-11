@@ -1,13 +1,19 @@
 package com.example.Project;
 
+import java.util.UUID;
+
 public class Project {
-    String name;
-    Team team;
-    Project(String name){
+    private String name;
+    private Team team;
+    private String projectID;
+
+    Project(String name, Team team, String projectID) {
         this.name = name;
+        this.team = team;
+        this.projectID = projectID;
     }
     Project(){
-        this.name = "";
+        this.name = "Project";
     }
     public void setName(String name){
         this.name = name;
@@ -15,12 +21,16 @@ public class Project {
     public String getName(){
         return name;
     }
-    public static Project create(String name){
-        return new Project(name);
+    public Team getTeam(){
+        return team;
     }
-    public static Project create(){
-        return new Project();
+    public String getProjectId(){
+        return projectID;
     }
+    public static Project create(String name, Team team){
+        return new Project(name, team, UUID.randomUUID().toString());
+    }
+    
     public void assignTeam(Team team){
         this.team = team;
     }

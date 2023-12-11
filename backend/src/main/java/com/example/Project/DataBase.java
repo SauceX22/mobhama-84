@@ -2,8 +2,10 @@ package com.example.Project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -14,9 +16,44 @@ public class DataBase {
     final private static String LOGIN_PATH = PATH + "/login.csv";
     final private static String USERSINFO_PATH = PATH + "/usersInfo.csv";
     final private static String TEAMSINFO_PATH = PATH + "/teams.csv";
+    final private static String PROJECTSINFO_PATH = PATH + "/projects.csv";
 
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<Team> teams = new ArrayList<>();
+    public static ArrayList<Project> projects = new ArrayList<>();
+
+    public static void loadProjects() {
+        // header projectId,name,teamId
+        try {
+            File userInfoFile = new File(PROJECTSINFO_PATH);
+            Scanner reader = new Scanner(userInfoFile);
+            reader.nextLine(); // header
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                String[] dataArr = data.split(",");
+                Team team = getTeam(dataArr[0]);
+                if (team != null) {
+                    Project project = new Project(dataArr[1], DataBase.getTeam(dataArr[0]), dataArr[2]);
+                    team.getProjectIds().add(project.getProjectId());
+                    projects.add(project);
+                }else {
+                    System.out.println("Team with id" + dataArr[2] +  "not found");
+                }   
+            }
+            reader.close();
+        }catch(Exception e){
+            System.out.println("Error loading projects");
+        }
+    }
+    
+    public static Team getTeam(String id) {
+        for (Team team : teams) {
+            if (team.getId().equals(id)) {
+                return team;
+            }
+        }
+        return null;
+    }
 
     public static void loadUsers() {
         //header = {"name", "id", "PhoneNumber", "email", "type", "reseeachInterest"};
@@ -45,7 +82,7 @@ public class DataBase {
 
     public static void loadTeams() {
         // header = teamId,teamName,membersId
-        System.out.println("I am reading teams");
+        System.out.println("Loading teams...");
         try {
             File userInfoFile = new File(TEAMSINFO_PATH);
             Scanner reader = new Scanner(userInfoFile);
@@ -67,6 +104,7 @@ public class DataBase {
                 teams.add(team);
             }
             reader.close();
+            System.out.println("Teams Loaded successfully");
         }catch(Exception e){
             System.out.println("Error loading teams");
         }
@@ -75,10 +113,11 @@ public class DataBase {
     public static ArrayList<Team> getUserTeams(String id) {
         ArrayList<Team> userTeams = new ArrayList<>();
         for (Team team: teams) {
+
             for (User user : team.getMembers()) {
-                System.out.println(user.name);
                 if (user.getId().equals(id)) {
                     userTeams.add(team);
+                    break;
                 }
             }
         }
@@ -116,6 +155,28 @@ public class DataBase {
             }
         }
         return null;
+    }
+    public static Project getProjectById(String id) {
+        for (Project project : projects) {
+            if (project.getProjectId().equals(id)) {
+                return project;
+            }
+        }
+        return null;
+    }
+    public static ArrayList<Project> getUserProjects(String useerId) {
+        System.out.println("get projects");
+        ArrayList<Project> userProjects = new ArrayList<>();
+        ArrayList<Team> userTeams = getUserTeams(useerId);
+        for (Team team: userTeams) {
+            for (String projectId : team.getProjectIds()) {
+                Project project = getProjectById(projectId);
+                if (project != null) {
+                    userProjects.add(project);
+                }
+            }
+        }
+        return userProjects;
     }
 
 }

@@ -12,15 +12,13 @@ import java.util.Dictionary;
 @SpringBootApplication
 public class ProjectApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(ProjectApplication.class, args);
 		DataBase.loadUsers();
 		DataBase.loadTeams();
+		DataBase.loadProjects();
 		ArrayList<Team> teams = DataBase.getUserTeams("KFUPM");
-		if (teams != null) {
-			System.out.println("Teams");
-			System.out.println(teams);
-		}else {
-			System.out.println("No teams");
-		}
+		System.out.println(teams);
+		SpringApplication.run(ProjectApplication.class, args);
+
+
 	}
 }
