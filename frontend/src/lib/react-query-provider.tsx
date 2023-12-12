@@ -1,15 +1,23 @@
 "use client";
 
-import { QueryClientProvider, queryClient } from "@/lib/query-client";
+import {
+  QueryClientProvider,
+  queryClient as previousQueryClient,
+} from "@/lib/query-client";
 import React from "react";
 
 type Props = {
   children?: React.ReactNode;
+  queryClient?: typeof previousQueryClient;
 };
 
-const ReactQueryProvider = ({ children }: Props) => {
+const ReactQueryProvider = ({ queryClient, children }: Props) => {
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider
+      client={queryClient ? queryClient : previousQueryClient}
+    >
+      {children}
+    </QueryClientProvider>
   );
 };
 
