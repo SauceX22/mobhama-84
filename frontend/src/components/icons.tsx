@@ -35,6 +35,7 @@ import {
   FaHome as Home,
   FaTasks as Tasks,
   FaUsers as Users,
+  FaCalendar as Calendar,
 } from "react-icons/fa";
 import { IoSunnyOutline as Sun } from "react-icons/io5";
 
@@ -43,6 +44,7 @@ type IconProps = React.HTMLAttributes<SVGElement>;
 export type Icon = React.ElementType<IconProps>;
 
 export const Icons = {
+  calendar: Calendar as Icon,
   home: Home as Icon,
   logo: Egg as Icon,
   close: X as Icon,
