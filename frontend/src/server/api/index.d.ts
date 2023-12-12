@@ -14,7 +14,7 @@ export interface Machine {
 
 export interface Project {
     id: string;
-    title: string;
+    name: string;
     description: string;
     avatarFallback: string;
     team: Team;
