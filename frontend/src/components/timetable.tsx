@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { cn, getReservationHourRow } from "@/lib/utils";
 import TableItem from "@/components/table-item";
-import { type Reservation } from "@/server/api";
+import { type Reservation, ReservationStatus } from "@/server/api";
 import { getDay, parse, set } from "date-fns";
 
 const days = ["SUN", "MON", "TUE", "WED", "THU"];
@@ -148,27 +148,6 @@ const TimeTable: React.FC = () => {
 
     return timeSlots;
   };
-
-  useEffect(() => {
-    addEvent({
-      id: "event-id",
-      machine: {
-        id: "machine-id",
-        name: "machine 1",
-      },
-      team: {
-        id: "team-id",
-        name: "team 1",
-        members: [],
-        projects: [],
-      },
-      startTime: set(parse("2023-12-12", "yyyy-MM-dd", new Date()), {
-        hours: 9,
-        minutes: 0,
-      }),
-      duration: 50,
-    });
-  }, []);
 
   return (
     <div
