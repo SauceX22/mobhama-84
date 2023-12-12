@@ -14,7 +14,7 @@ export const metadata = {
 const projects: Project[] = [
   {
     id: "item1",
-    title: "Project A",
+    name: "Project A",
     avatarFallback: "PA",
     description: "Description of Project A.",
     team: {
@@ -26,7 +26,7 @@ const projects: Project[] = [
   },
   {
     id: "item2",
-    title: "Project B",
+    name: "Project B",
     avatarFallback: "PB",
     description: "Description of Project B.",
     team: {
@@ -38,7 +38,7 @@ const projects: Project[] = [
   },
   {
     id: "item3",
-    title: "Project C",
+    name: "Project C",
     avatarFallback: "PC",
     description: "Description of Project C.",
     team: {
@@ -50,7 +50,7 @@ const projects: Project[] = [
   },
   {
     id: "item4",
-    title: "Project D",
+    name: "Project D",
     avatarFallback: "PD",
     description: "Description of Project D.",
     team: {
@@ -62,7 +62,7 @@ const projects: Project[] = [
   },
   {
     id: "item5",
-    title: "Project E",
+    name: "Project E",
     avatarFallback: "PE",
     description: "Description of Project E.",
     team: {
@@ -74,7 +74,7 @@ const projects: Project[] = [
   },
   {
     id: "item6",
-    title: "Project F",
+    name: "Project F",
     avatarFallback: "PF",
     description: "Description of Project F.",
     team: {
@@ -86,7 +86,7 @@ const projects: Project[] = [
   },
   {
     id: "item7",
-    title: "Project G",
+    name: "Project G",
     avatarFallback: "PG",
     description: "Description of Project G.",
     team: {
@@ -98,7 +98,7 @@ const projects: Project[] = [
   },
   {
     id: "item8",
-    title: "Project H",
+    name: "Project H",
     avatarFallback: "PH",
     description: "Description of Project H.",
     team: {

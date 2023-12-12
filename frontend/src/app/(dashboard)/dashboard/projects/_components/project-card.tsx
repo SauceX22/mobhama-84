@@ -23,7 +23,7 @@ const ProjectCard = ({ project, ...props }: Props) => {
       onClick={() => router.push(`/dashboard/projects/${project.id}`)}
     >
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>{project.title}</CardTitle>
+        <CardTitle>{project.name}</CardTitle>
         <Badge>Active</Badge>
       </CardHeader>
       <CardContent className="h-20">
