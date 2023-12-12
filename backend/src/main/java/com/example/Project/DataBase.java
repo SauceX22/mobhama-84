@@ -262,6 +262,9 @@ public class DataBase {
         }
         return null;
     }
+    public static ArrayList<Team> getTeams() {
+        return teams;
+    }
     public static void addTeam(Team team) {
         teams.add(team);
         saveTeams();
@@ -454,5 +457,24 @@ public class DataBase {
             }
         }
         return teamReservations;
+    }
+    public static Machine updateMachineInfo(String id, String name, String status) {
+        Machine machine = DataBase.getMachineById(id);
+        if(machine == null) {
+            return null;
+        }
+        DataBase.removeMachine(machine);
+        machine.setName(name);
+        machine.setStatus(status);
+        DataBase.addMachine(machine);
+        return machine;
+    }
+    public static boolean removeMachine(String id) {
+        Machine machine = DataBase.getMachineById(id);
+        if(machine == null) {
+            return false;
+        }
+        DataBase.removeMachine(machine);
+        return true;
     }
 }

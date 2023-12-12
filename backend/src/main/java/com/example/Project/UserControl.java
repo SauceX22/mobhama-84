@@ -24,6 +24,17 @@ public class UserControl {
         }
         return ResponseEntity.ok(user);
     }
+    @GetMapping("/teams")
+    public ResponseEntity<ArrayList<Team>> getUserTeams(@RequestParam String userId) {
+        try {
+            ArrayList<Team> teams = DataBase.getUserTeams(userId);
+            return ResponseEntity.ok(teams);
+        } catch (Exception e) {
+            // Log the exception
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @PostMapping()
     public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String password, @RequestParam String type, @RequestParam String researchInterest, @RequestParam String avatar) {
