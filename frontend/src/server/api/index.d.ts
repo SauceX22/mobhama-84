@@ -17,6 +17,7 @@ export interface Project {
     title: string;
     description: string;
     avatarFallback: string;
+    team: Team;
 }
 
 export enum ReservationStatus {
