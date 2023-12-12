@@ -17,7 +17,6 @@ public class ProjectController {
     }
 
     @PostMapping()
-    public ResponseEntity<Project> createProject(@RequestParam String name, @RequestParam String id) {
     public ResponseEntity<Project> createProject(@RequestParam String name, @RequestParam String teamId) {
         Team team = DataBase.getTeamById(teamId);
         if (team == null) {
