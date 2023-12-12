@@ -40,7 +40,7 @@ A description for each use case above can be found [here](https://publuu.com/fli
 ---
 
 ### Class Diagram
-<img src="https://i.imgur.com/FccTRQB.jpg" alt="Class diagram Image" width="400">
+<img src="https://i.imgur.com/zcfyE7B.jpg" alt="Class diagram Image" width="400">
 
 ---
 
@@ -58,7 +58,7 @@ A description for each use case above can be found [here](https://publuu.com/fli
 <img src="https://i.imgur.com/4ofueP5.jpg" alt="Activity Diagrams Images" width="400">
 
 #### Reschedule Reservation
-<img src="https://i.imgur.com/j3YwIrX.jpg" alt="Activity Diagrams Images" width="400">
+<img src="https://i.imgur.com/tcvBwgy.jpg" alt="Activity Diagrams Images" width="400">
 
 #### Sign in
 <img src="https://i.imgur.com/mw9kq60.jpg" alt="Activity Diagrams Images" width="400">
@@ -67,22 +67,22 @@ A description for each use case above can be found [here](https://publuu.com/fli
 
 ### Sequence Diagram for the Main Operations
 #### Create Project
-<img src="https://i.imgur.com/qGizSDU.jpg" alt="Sequence Diagram images" width="400">
+<img src="https://i.imgur.com/XRxCTWb.jpg" alt="Sequence Diagram images" width="400">
 
 #### Create Machine
-<img src="https://i.imgur.com/SdTzw5i.jpg" alt="Sequence Diagram images" width="400">
+<img src="https://i.imgur.com/oJZ2wJJ.jpg" alt="Sequence Diagram images" width="400">
 
 #### Create Team
-<img src="https://i.imgur.com/NXVtekH.jpg" alt="Sequence Diagram images" width="400">
+<img src="https://i.imgur.com/uS4uxBt.jpg" alt="Sequence Diagram images" width="400">
 
 #### Reserve Machine
-<img src="https://i.imgur.com/aWi4uAl.jpg" alt="Sequence Diagram images" width="400">
+<img src="https://i.imgur.com/yGKO4NF.jpg" alt="Sequence Diagram images" width="400">
 
 #### Reschedule Reservation
-<img src="https://i.imgur.com/sX5CGrH.jpg" alt="Sequence Diagram images" width="400">
+<img src="https://i.imgur.com/78tPuMC.jpg" alt="Sequence Diagram images" width="400">
 
 #### Sign in
-<img src="https://i.imgur.com/pceO4lH.jpg" alt="Sequence Diagram images" width="400">
+<img src="https://i.imgur.com/zJi3uxU.jpg" alt="Sequence Diagram images" width="400">
 
 ## Project Contributors
 
