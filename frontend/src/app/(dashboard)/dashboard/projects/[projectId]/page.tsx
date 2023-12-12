@@ -19,33 +19,38 @@ import { format } from "date-fns";
 import { useQuery } from "react-query";
 import { env } from "@/env.mjs";
 import { toast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {
   params: { projectId: string };
 };
 
+const reservations: Reservation[] = [];
+
 const ProjectDetailsPage = ({ params, ...props }: Props) => {
-  const { data: reservations } = useQuery<Reservation[]>({
-    queryKey: ["reservations", params.projectId],
-    suspense: true,
-    queryFn: async () =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      await fetch(`${env.API_DOMAIN}?projectId=${params.projectId}`).then(
-        (res) => res.json(),
-      ),
-    onError(error) {
-      toast({
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        title:
-          "Error: " +
-          (error instanceof Error
-            ? error.message
-            : "fetch reservations failed"),
-        description: "Failed to fetch reservations.",
-        variant: "destructive",
-      });
-    },
-  });
+  const router = useRouter();
+
+  // const { data: reservations } = useQuery<Reservation[]>({
+  //   queryKey: ["reservations", params.projectId],
+  //   suspense: true,
+  //   queryFn: async () =>
+  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //     await fetch(`${env.API_DOMAIN}?projectId=${params.projectId}`).then(
+  //       (res) => res.json(),
+  //     ),
+  //   onError(error) {
+  //     toast({
+  //       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  //       title:
+  //         "Error: " +
+  //         (error instanceof Error
+  //           ? error.message
+  //           : "fetch reservations failed"),
+  //       description: "Failed to fetch reservations.",
+  //       variant: "destructive",
+  //     });
+  //   },
+  // });
 
   return (
     <DashboardShell>
@@ -53,7 +58,18 @@ const ProjectDetailsPage = ({ params, ...props }: Props) => {
         // TODO get the project name using id
         heading={`Project ${params.projectId}`}
         text="Explore and manage project details."
-      />
+      >
+        <Button
+          className="ml-4"
+          variant="outline"
+          onClick={() =>
+            router.push(`/dashboard/projects/${params.projectId}/settings`)
+          }
+        >
+          Edit Project Settings
+          <Icons.settings className="ml-2 h-4 w-4 opacity-70" />
+        </Button>
+      </DashboardHeader>
       <div className="flex flex-col gap-4">
         {/* <TimeTable /> */}
         <section className="flex w-full flex-col gap-2 px-2 py-4">
