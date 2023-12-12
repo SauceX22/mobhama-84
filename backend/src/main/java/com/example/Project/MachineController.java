@@ -36,8 +36,8 @@ public class MachineController {
         return ResponseEntity.ok(machine);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Machine> updateMachine(String id, String name, String status) {
-        Machine machineUpdated = DataBase.updateMachineInfo(id, name, status);
+    public ResponseEntity<Machine> updateMachine(String id, String name) {
+        Machine machineUpdated = DataBase.updateMachineInfo(id, name);
         if (machineUpdated == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }

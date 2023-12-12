@@ -37,8 +37,13 @@ public class UserControl {
     }
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String type, @RequestParam String researchInterest, @RequestParam String avatar) {
-        if (type.equals("Admin")) {
+    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String role, @RequestParam String researchInterest, @RequestParam String avatar) {
+        if (avatar.isEmpty() || avatar.isBlank()) {
+            avatar = "https://avatars.githubusercontent.com/u/13651651?v=4";
+        }
+
+        if (role.equals("ADMIN")) {
+
             Admin user = Admin.create(name, phoneNum, email, avatar);
             DataBase.addUser(user);
             return ResponseEntity.ok(user);
