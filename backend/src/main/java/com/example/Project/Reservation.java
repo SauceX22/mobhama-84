@@ -11,7 +11,11 @@ public class Reservation {
     LocalDateTime endTime;
     User bookedBy;
     LocalDateTime bookedOn;
-    
+    Status status;
+    enum Status {
+        Upcoming,
+        Passed
+    }
     Reservation(String id, Machine machine, Team team, LocalDateTime startTime, LocalDateTime endTime){
         this.id = id;
         this.machine = machine;
@@ -62,4 +66,38 @@ public class Reservation {
     public boolean equals(Object obj) {
         return id.equals(((Reservation)obj).id);
     }
+    public void setBookedBy(User bookedBy) {
+        this.bookedBy = bookedBy;
+    }
+    public void setBookedOn(LocalDateTime bookedOn) {
+        this.bookedOn = bookedOn;
+        setStatus();
+    }
+    public void setStatus() {
+        if (LocalDateTime.now().isAfter(endTime)) {
+            status = Status.Passed;
+        } else {
+            status = Status.Upcoming;
+        }
+    }
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+    
+    public User getBookedBy() {
+        return bookedBy;
+    }
+    public LocalDateTime getBookedOn() {
+        return bookedOn;
+    }
+    public String getId() {
+        return id;
+    }
+    
 }

@@ -362,7 +362,7 @@ public class DataBase {
 
     // reservations
     public static void loadReservations() {
-        // header = reservationId,machineId,teamId,startTime,endTime
+        // header = reservationId,machineId,teamId,startTime,endTime,bookedById,bookedOn
         try {
             File userInfoFile = new File(RESERVATIONSINFO_PATH);
             Scanner reader = new Scanner(userInfoFile);
@@ -373,14 +373,10 @@ public class DataBase {
                 Machine machine = getMachineById(dataArr[1]);
                 Team team = getTeamById(dataArr[2]);
                 if (machine != null && team != null) {
-                    // //date Format: yy-mm-ddThh:mm:ss
-                    // String[] start = dataArr[3].split("T");
-                    // String[] end = dataArr[4].split("T");
-                    // String[] startDate = start[0].split("-");
-                    // String[] startTime = start[1].split(":");
-                    // String[] endDate = end[0].split("-");
-                    // String[] endTime = end[1].split(":");
-                    Reservation reservation = new Reservation(dataArr[0],machine, team, dataArr[3], dataArr[4]);
+                    Reservation reservation = new Reservation(dataArr[0],machine, team, LocalDateTime.parse(dataArr[3]), LocalDateTime.parse(dataArr[4]));
+                    User bookedBy = getUserInfo(dataArr[5]);
+                    reservation.setBookedBy(bookedBy);
+                    reservation.setBookedOn(LocalDateTime.parse(dataArr[6]));
                     reservations.add(reservation);          
                 }
             }
@@ -393,9 +389,9 @@ public class DataBase {
         // write reservations infos back to file
         File userInfoFile = new File(RESERVATIONSINFO_PATH);
         try(FileWriter writer = new FileWriter(userInfoFile);) {   
-            writer.write("reservationId,machineId,teamId,startTime,endTime\n");
+            writer.write("reservationId,machineId,teamId,startTime,endTime,bookedById,bookedOn\n");
             for (Reservation reservation : reservations) {
-                String data = reservation.id + "," + reservation.machine.getId() + "," + reservation.team.getId() + "," + reservation.startTime.toString() + "," + reservation.endTime.toString();
+                String data = reservation.id + "," + reservation.machine.getId() + "," + reservation.team.getId() + "," + reservation.startTime.toString() + "," + reservation.endTime.toString() + "," + reservation.bookedBy.getId() + "," + reservation.bookedOn.toString();
                 writer.write(data + "\n");
             }
         } catch (Exception e) {
@@ -403,11 +399,18 @@ public class DataBase {
         }
     }
     public static ArrayList<Reservation> getReservations() {
+        updateReservationStatus();
         return reservations;
+    }
+    public static void updateReservationStatus() {
+        for (Reservation reservation : reservations) {
+            reservation.setStatus();
+        }
     }
     public static Reservation getReservationById(String id) {
         for (Reservation reservation : reservations) {
             if (reservation.id.equals(id)) {
+                reservation.setStatus();
                 return reservation;
             }
         }
@@ -439,6 +442,7 @@ public class DataBase {
         ArrayList<Reservation> machineReservations = new ArrayList<>();
         for (Reservation reservation: reservations) {
             if (reservation.getMachine().getId().equals(machineId)) {
+                reservation.setStatus();
                 machineReservations.add(reservation);
             }
         }
@@ -448,6 +452,7 @@ public class DataBase {
         ArrayList<Reservation> teamReservations = new ArrayList<>();
         for (Reservation reservation: reservations) {
             if (reservation.getTeam().getId().equals(teamId)) {
+                reservation.setStatus();
                 teamReservations.add(reservation);
             }
         }
@@ -472,4 +477,5 @@ public class DataBase {
         DataBase.removeMachine(machine);
         return true;
     }
+
 }

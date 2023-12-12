@@ -56,15 +56,23 @@ parameters: {id:String}
 
 POST: /User
 parameters example:
-	name:Hamoud
-	phoneNum:0531256235
-	email:kfupm@dsf.com
-	type:TeamMember
-	researchInterest:AI no
-	avatar:imaeg.com/12
+	name:Yahia Saleh
+	phoneNum:053128941
+	email:kfupm222@dsf.com
+	type:ADMIN
+	researchInterest:UI
+	avatar:imaeg.com/1212
 
 return:
-
+{
+    "name": "Yahia Saleh",
+    "id": "1d9b9fcb-bbd8-4a89-858a-854eb4a9079f",
+    "email": "kfupm222@dsf.com",
+    "avatar": "imaeg.com/1212",
+    "role": "TEAM_MEMBER",
+    "researchInterest": "UI",
+    "phoneNum": "053128941"
+}
 
 /////////////
 
@@ -75,5 +83,7 @@ GET: /Team
 
 return:
 
-/POST
+/POST: /Team
+parameters: name:TeamName  usersId:id1,id2   //list
+	
 
