@@ -8,6 +8,8 @@ export interface User {
     name: string;
     phoneNum: string;
     email: string;
+    avatar: string;
+    avatarFallback: string;
 }
 
 export interface TeamMember extends User {
@@ -48,12 +50,19 @@ export const useProjectQuery = () => {
 };
 
 
+export enum ReservationStatus {
+    UPCOMING = 'upcoming',
+    PAST = 'past',
+}
+
 // Reservation.ts
 export interface Reservation {
     id: string;
     machine: Machine;
-    team: Team;
+    project: Project;
     bookedBy: User;
+    bookedOn: Date;
+    status: ReservationStatus;
     startTime: Date;
     duration: number;
 }
