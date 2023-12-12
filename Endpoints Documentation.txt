@@ -1,0 +1,14 @@
+/login
+parameters:{username:String, password:String} 
+return:User class
+example
+{
+    "name": "Mo",
+    "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+    "email": "12781271@dsf.com",
+    "avatar": "imaeg.com/12",
+    "researchInterest": "AI no",
+    "phoneNum": "05363121"
+}
+
+/

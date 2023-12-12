@@ -8,6 +8,11 @@ abstract public class User {
     protected String PhoneNum;
     protected String email;
     protected String avatar;
+    protected Role role;
+    enum Role{
+        ADMIN,
+        TEAM_MEMBER,
+    }
 
     public User() {
         this.id = UUID.randomUUID().toString();
@@ -57,5 +62,8 @@ abstract public class User {
     }
     public String getAvatar() {
         return avatar;
+    }
+    public Role getRole(){
+        return role;
     }
 }

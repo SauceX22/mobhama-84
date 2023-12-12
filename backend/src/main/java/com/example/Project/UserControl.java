@@ -37,7 +37,7 @@ public class UserControl {
     }
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String password, @RequestParam String type, @RequestParam String researchInterest, @RequestParam String avatar) {
+    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String type, @RequestParam String researchInterest, @RequestParam String avatar) {
         if (type.equals("Admin")) {
             Admin user = Admin.create(name, phoneNum, email, avatar);
             DataBase.addUser(user);

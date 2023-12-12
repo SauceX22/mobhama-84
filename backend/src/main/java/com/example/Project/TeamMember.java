@@ -6,6 +6,7 @@ public class TeamMember extends User{
     private String researchInterest;
     TeamMember(String name, String PhoneNum, String email, String id, String avatar){
         super(name, PhoneNum, email, id, avatar);
+        role = Role.TEAM_MEMBER;
         this.researchInterest = "";
     }
 //    TeamMember(String name, String PhoneNum, String email, String avatar){
@@ -14,6 +15,7 @@ public class TeamMember extends User{
 //    }
     TeamMember(){
         super();
+        this.role = Role.TEAM_MEMBER;
         this.researchInterest = "";
     }
     public void setResearchInterest(String researchInterest){

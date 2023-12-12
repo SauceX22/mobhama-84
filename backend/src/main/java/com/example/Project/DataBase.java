@@ -1,17 +1,12 @@
 package com.example.Project;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.Scanner;
-import java.util.UUID;
 
-import org.springframework.http.ResponseEntity;
 
 public class DataBase {
     final private static String PATH = "DataBase";
@@ -70,7 +65,7 @@ public class DataBase {
     }
 
     public static void loadUsers() {
-        //header = {"name", "id", "PhoneNumber", "email", "type", "researchInterest", avatar};
+        //header = {"name", "id", "PhoneNumber", "email", "role", "researchInterest", avatar};
         try {
             File userInfoFile = new File(USERSINFO_PATH);
             Scanner reader = new Scanner(userInfoFile);
@@ -78,9 +73,9 @@ public class DataBase {
             while (reader.hasNextLine()) {
                 String data = reader.nextLine();
                 String[] dataArr = data.split(",");
-                if (dataArr[4].equals("Admin")) {
+                if (dataArr[4].equals("ADMIN")) {
                     users.add(new Admin(dataArr[0], dataArr[2], dataArr[3], dataArr[1], dataArr[6]));
-                } else {
+                } else if (dataArr[4].equals("TEAM_MEMBER")){
                     TeamMember tm = new TeamMember(dataArr[0], dataArr[2], dataArr[3], dataArr[1], dataArr[6]);
                     tm.setResearchInterest(dataArr[5]);
                     users.add(tm);
@@ -208,9 +203,9 @@ public class DataBase {
         File userInfoFile = new File(USERSINFO_PATH);
         try(FileWriter writer = new FileWriter(userInfoFile)) {
             
-            writer.write("name,id,PhoneNumber,email,type,researchInterest,avatar\n");
+            writer.write("name,id,PhoneNumber,email,role,researchInterest,avatar\n");
             for (User user : users) {
-                String data = user.getName() + "," + user.getId() + "," + user.getPhoneNum() + "," + user.getEmail() + "," + user.getClass().getSimpleName();
+                String data = user.getName() + "," + user.getId() + "," + user.getPhoneNum() + "," + user.getEmail() + "," + user.getRole().toString();
                 if (user.getClass().getSimpleName().equals("TeamMember")) {
                     data += "," + ((TeamMember) user).getResearchInterest();
                 }else{

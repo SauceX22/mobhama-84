@@ -5,9 +5,11 @@ import java.util.UUID;
 public class Admin extends User{
     Admin(){
      super();   
+     this.role = Role.ADMIN;
     }
     Admin(String name, String PhoneNum, String email, String id, String avatar){
         super(name, PhoneNum, email, id, avatar);
+        this.role = Role.ADMIN;
     }
 //    Admin(String name, String PhoneNum, String email, String avatar){
 //        super(name, PhoneNum, email, UUID.randomUUID().toString(), avatar);
@@ -21,6 +23,6 @@ public class Admin extends User{
     }
     public void addUser(String id){}
     public void removeUser(String id){}
-
+    
 
 }
