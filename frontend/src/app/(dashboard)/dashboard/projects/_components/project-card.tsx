@@ -38,7 +38,7 @@ const ProjectCard = ({ project, ...props }: Props) => {
           />
           <AvatarFallback>{project.avatarFallback}</AvatarFallback>
         </Avatar>
-        <span>{project.owner}</span>
+        <span>team of {project.name}</span>
       </CardFooter>
     </Card>
   );
