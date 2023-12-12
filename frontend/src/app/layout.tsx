@@ -11,7 +11,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { QueryClientProvider, queryClient } from "@/lib/query-client";
+import ReactQueryProvider from "@/lib/react-query-provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -91,14 +91,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontHeading.variable,
         )}
       >
-        <QueryClientProvider client={queryClient}>
+        <ReactQueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
             <Toaster />
             <TailwindIndicator />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
