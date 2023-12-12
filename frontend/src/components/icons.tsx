@@ -32,44 +32,48 @@ import {
   FaWhatsapp as WhatsappIcon,
   FaTimes as X,
   FaYoutube as Youtube,
-} from "react-icons/fa"
-import { IoSunnyOutline as Sun } from "react-icons/io5"
+  FaHome as Home,
+  FaTasks as Tasks,
+  FaUsers as Users,
+  FaCalendar as Calendar,
+} from "react-icons/fa";
+import { IoSunnyOutline as Sun } from "react-icons/io5";
 
-import { cn } from "@/lib/utils"
+type IconProps = React.HTMLAttributes<SVGElement>;
 
-type IconProps = React.HTMLAttributes<SVGElement>
-
-export type Icon = React.ElementType<IconProps>
+export type Icon = React.ElementType<IconProps>;
 
 export const Icons = {
-  logo: Egg,
-  close: X,
-  spinner2: Loader2,
-  chevronLeft: ChevronLeft,
-  chevronRight: ChevronRight,
-  chevronDown: ChevronDown,
-  chevronUp: ChevronUp,
-  search: Search,
-  circle: Circle,
-  trash: Trash,
-  post: FileText,
-  page: File,
-  media: Image,
-  settings: Settings,
-  billing: CreditCard,
-  ellipsis: MoreVertical,
-  add: Plus,
-  warning: AlertTriangle,
-  user: User,
-  arrowRight: ArrowRight,
-  help: HelpCircle,
-  pizza: Pizza,
-  sun: Sun,
-  moon: Moon,
-  laptop: Laptop,
-  microsoft: MicrosoftIcon,
-  gitHub: GitHubIcon,
-  twitter: TwitterIcon,
+  calendar: Calendar as Icon,
+  home: Home as Icon,
+  logo: Egg as Icon,
+  close: X as Icon,
+  spinner2: Loader2 as Icon,
+  chevronLeft: ChevronLeft as Icon,
+  chevronRight: ChevronRight as Icon,
+  chevronDown: ChevronDown as Icon,
+  chevronUp: ChevronUp as Icon,
+  search: Search as Icon,
+  circle: Circle as Icon,
+  trash: Trash as Icon,
+  post: FileText as Icon,
+  page: File as Icon,
+  media: Image as Icon,
+  settings: Settings as Icon,
+  billing: CreditCard as Icon,
+  ellipsis: MoreVertical as Icon,
+  add: Plus as Icon,
+  warning: AlertTriangle as Icon,
+  user: User as Icon,
+  arrowRight: ArrowRight as Icon,
+  help: HelpCircle as Icon,
+  pizza: Pizza as Icon,
+  sun: Sun as Icon,
+  moon: Moon as Icon,
+  laptop: Laptop as Icon,
+  microsoft: MicrosoftIcon as Icon,
+  gitHub: GitHubIcon as Icon,
+  twitter: TwitterIcon as Icon,
   spinner: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -85,11 +89,13 @@ export const Icons = {
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
     </svg>
   ),
-  x: X,
-  linkedin: LinkedinIcon,
-  email: AtSign,
-  check: Check,
-  youtube: Youtube,
-  whatsapp: WhatsappIcon,
-  logOut: LogOut,
-}
+  x: X as Icon,
+  linkedin: LinkedinIcon as Icon,
+  email: AtSign as Icon,
+  check: Check as Icon,
+  youtube: Youtube as Icon,
+  whatsapp: WhatsappIcon as Icon,
+  logOut: LogOut as Icon,
+  tasks: Tasks as Icon,
+  users: Users as Icon,
+};
