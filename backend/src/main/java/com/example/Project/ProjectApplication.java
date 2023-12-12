@@ -6,7 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.xml.crypto.Data;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Dictionary;
 
 @SpringBootApplication
@@ -15,8 +18,8 @@ public class ProjectApplication {
 		DataBase.loadUsers();
 		DataBase.loadTeams();
 		DataBase.loadProjects();
-		ArrayList<Team> teams = DataBase.getUserTeams("KFUPM");
-		System.out.println(teams);
+		Date date = new Date();
+		System.out.println(date.tim);
 		SpringApplication.run(ProjectApplication.class, args);
 
 

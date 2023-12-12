@@ -1,27 +1,24 @@
 package com.example.Project;
 
-import javax.xml.crypto.Data;
+import java.util.Date;
+
 public class Reservation {
+    String id;
     Machine machine;
     Team team;
-    Data startTime;
-    Data endTime;
-    Reservation(Machine machine, Team team, Data startTime, Data endTime){
+    Date startTime;
+    Date endTime;
+    Reservation(String id, Machine machine, Team team, Date startTime, Date endTime){
+        this.id = id;
         this.machine = machine;
         this.team = team;
         this.startTime = startTime;
         this.endTime = endTime;
     }
-    Reservation(){
-        this.machine = null;
-        this.team = null;
-        this.startTime = null;
-        this.endTime = null;
-    }
     public void setMachine(Machine machine){
         this.machine = machine;
     }
-    public Machine getMachine(){
+    public Machine getMachineId(){
         return machine;
     }
     public void setTeam(Team team){
@@ -30,21 +27,19 @@ public class Reservation {
     public Team getTeam(){
         return team;
     }
-    public Data getStartTime(){
+    public Date getStartTime(){
         return startTime;
     }
-    public Data getEndTime(){
+    public Date getEndTime(){
         return endTime;
     }
-    public void reschedule(Data startTime, Data endTime){
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
     // ????????????????????????????
-    public void cancel(){
-        this.machine = null;
-        this.team = null;
-        this.startTime = null;
-        this.endTime = null;
+    public boolean schedule(Date startTime, Date endTime){
+        if (this.endTime.before(startTime)){
+            this.startTime = startTime;
+            this.endTime = endTime;
+            return true;
+        }
+        return false;
     }
 }

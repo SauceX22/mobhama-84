@@ -31,6 +31,9 @@ public class Team {
     public void setMembers(ArrayList<User> members) {
         this.members = members;
     }
+    public void addMember(User member){
+        members.add(member);
+    }
     public ArrayList<User> getMembers() {
         return members;
     }
