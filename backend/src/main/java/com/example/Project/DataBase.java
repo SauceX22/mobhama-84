@@ -308,7 +308,7 @@ public class DataBase {
 
     // machines
     public static void loadMachines() {
-        // header = Id,name,status
+        // header = Id,name
         try {
             File userInfoFile = new File(MACHINESINFO_PATH);
             Scanner reader = new Scanner(userInfoFile);
@@ -316,7 +316,7 @@ public class DataBase {
             while (reader.hasNextLine()) {
                 String data = reader.nextLine();
                 String[] dataArr = data.split(",");
-                Machine machine = new Machine(dataArr[1], dataArr[0], dataArr[2]);
+                Machine machine = new Machine(dataArr[1], dataArr[0]);
                 machines.add(machine);
             }
             reader.close();
@@ -330,9 +330,9 @@ public class DataBase {
         // write machines infos back to file
         File userInfoFile = new File(MACHINESINFO_PATH);
         try(FileWriter writer = new FileWriter(userInfoFile);) {   
-            writer.write("Id,name,status\n");
+            writer.write("Id,name\n");
             for (Machine machine : machines) {
-                String data = machine.getId() + "," + machine.getName() + "," + machine.getStatus();
+                String data = machine.getId() + "," + machine.getName();
                 writer.write(data + "\n");
             }
         } catch (Exception e) {
@@ -458,14 +458,13 @@ public class DataBase {
         }
         return teamReservations;
     }
-    public static Machine updateMachineInfo(String id, String name, String status) {
+    public static Machine updateMachineInfo(String id, String name) {
         Machine machine = DataBase.getMachineById(id);
         if(machine == null) {
             return null;
         }
         DataBase.removeMachine(machine);
         machine.setName(name);
-        machine.setStatus(status);
         DataBase.addMachine(machine);
         return machine;
     }

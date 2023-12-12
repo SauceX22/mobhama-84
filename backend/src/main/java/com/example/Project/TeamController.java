@@ -61,6 +61,7 @@ public class TeamController {
         DataBase.addTeam(team);
         return ResponseEntity.ok(team);
     }
+    
     @PutMapping("/addUser/{id}")
     public ResponseEntity<Team> addUserToTeam(@RequestParam String userId, @RequestParam String teamId) {
         Team team = DataBase.getTeamById(teamId);

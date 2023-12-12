@@ -5,11 +5,9 @@ import java.util.UUID;
 public class Machine {
     String name;
     String id;
-    String status;
-    Machine(String name, String id, String status){
+    Machine(String name, String id){
         this.name = name;
         this.id = id;
-        this.status = status;
     }
 
     public void setName(String name){
@@ -21,14 +19,8 @@ public class Machine {
     public String getId() {
         return id;
     }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status){
-        this.status = status;
-    }
     public static Machine create(String name){
-        return new Machine(name, UUID.randomUUID().toString(), "available");
+        return new Machine(name, UUID.randomUUID().toString());
     }
     public static void delete() {
 
