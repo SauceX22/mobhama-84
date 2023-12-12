@@ -20,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import { env } from "@/env.mjs";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import TimeTable from "@/components/timetable";
 
 type Props = {
   params: { projectId: string };
@@ -71,7 +72,7 @@ const ProjectDetailsPage = ({ params, ...props }: Props) => {
         </Button>
       </DashboardHeader>
       <div className="flex flex-col gap-4">
-        {/* <TimeTable /> */}
+        <TimeTable />
         <section className="flex w-full flex-col gap-2 px-2 py-4">
           {reservations?.map((reservation, index) => (
             <HoverCard key={index}>
