@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { type Reservation } from "@/server/api";
 import { format } from "date-fns";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { env } from "@/env.mjs";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -35,7 +35,7 @@ const ProjectDetailsPage = ({ params, ...props }: Props) => {
   //   suspense: true,
   //   queryFn: async () =>
   //     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  //     await fetch(`${env.API_DOMAIN}?projectId=${params.projectId}`).then(
+  //     await fetch(`$localhost:8080?projectId=${params.projectId}`).then(
   //       (res) => res.json(),
   //     ),
   //   onError(error) {
