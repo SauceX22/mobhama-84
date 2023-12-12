@@ -1,8 +1,8 @@
+"use client";
 import React from "react";
 
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
-import TimeTable from "@/components/timetable";
 
 import { Badge } from "@/components/ui/badge";
 import { CardContent, Card } from "@/components/ui/card";
@@ -16,14 +16,37 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { type Reservation } from "@/server/api";
 import { format } from "date-fns";
+import { useQuery } from "react-query";
+import { env } from "@/env.mjs";
+import { toast } from "@/components/ui/use-toast";
 
 type Props = {
   params: { projectId: string };
 };
 
-const reservations: Reservation[] = [];
-
 const ProjectDetailsPage = ({ params, ...props }: Props) => {
+  const { data: reservations } = useQuery<Reservation[]>({
+    queryKey: ["reservations", params.projectId],
+    suspense: true,
+    queryFn: async () =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      await fetch(`${env.API_DOMAIN}?projectId=${params.projectId}`).then(
+        (res) => res.json(),
+      ),
+    onError(error) {
+      toast({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        title:
+          "Error: " +
+          (error instanceof Error
+            ? error.message
+            : "fetch reservations failed"),
+        description: "Failed to fetch reservations.",
+        variant: "destructive",
+      });
+    },
+  });
+
   return (
     <DashboardShell>
       <DashboardHeader
@@ -34,7 +57,7 @@ const ProjectDetailsPage = ({ params, ...props }: Props) => {
       <div className="flex flex-col gap-4">
         {/* <TimeTable /> */}
         <section className="flex w-full flex-col gap-2 px-2 py-4">
-          {reservations.map((reservation, index) => (
+          {reservations?.map((reservation, index) => (
             <HoverCard key={index}>
               <HoverCardTrigger asChild>
                 <Card className="group relative overflow-hidden rounded-lg">
