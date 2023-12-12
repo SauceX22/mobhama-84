@@ -17,7 +17,6 @@ export interface Project {
     title: string;
     description: string;
     avatarFallback: string;
-    owner: string;
 }
 
 export enum ReservationStatus {
