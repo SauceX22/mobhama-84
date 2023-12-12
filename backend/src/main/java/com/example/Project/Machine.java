@@ -7,7 +7,6 @@ public class Machine {
     String id;
     String status;
     Machine(String name, String id, String status){
-    
         this.name = name;
         this.id = id;
         this.status = status;

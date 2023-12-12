@@ -1,10 +1,8 @@
 package com.example.Project;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 
-import javax.xml.crypto.Data;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class Main {
-    public static int x = 0;
-    @RequestMapping("/getProjects")
-    public ResponseEntity<ArrayList<Project>> getProjects(@RequestParam String userId) {
-        ArrayList<Project> projects = DataBase.getUserProjects(userId);
-        return ResponseEntity.ok(projects);
-    }
+
+
     @RequestMapping("/login")
     public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
        String id = DataBase.login(username, password);
@@ -29,11 +23,17 @@ public class Main {
            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
+    @RequestMapping("/Project")
+    @GetMapping
+    public ResponseEntity<ArrayList<Project>> getProjects(@RequestParam String userId) {
+        ArrayList<Project> projects = DataBase.getUserProjects(userId);
+        return ResponseEntity.ok(projects);
+    }
 
-    @RequestMapping("/getUserTeams")
+    // Teams
+
+    @RequestMapping("/Team")
     public ResponseEntity<ArrayList<Team>> getUserTeams(@RequestParam String userId) {
-        System.out.println("user recieved: " + userId);
-        System.out.println("0000-----------------------------------------------------------------");
         try {
             ArrayList<Team> teams = DataBase.getUserTeams(userId);
             System.out.println(teams);
@@ -101,58 +101,19 @@ public class Main {
     }
 
     @RequestMapping("/createUser")
-    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String password, @RequestParam String type, @RequestParam String researchInterest) {
+    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String password, @RequestParam String type, @RequestParam String researchInterest, @RequestParam String avatar) {
         if (type.equals("Admin")) {
-            Admin user = Admin.create(name, phoneNum, email);
+            Admin user = Admin.create(name, phoneNum, email, avatar);
             DataBase.addUser(user);
             return ResponseEntity.ok(user);
         } else {
-            TeamMember user = TeamMember.create(name, phoneNum, email);
+            TeamMember user = TeamMember.create(name, phoneNum, email, avatar);
             user.setResearchInterest(researchInterest);
             DataBase.addUser(user);
             return ResponseEntity.ok(user);
         }
     }
-        
-    @RequestMapping("/createProject")
-    public ResponseEntity<Project> createProject(@RequestParam String name, @RequestParam String teamId) {
-        Team team = DataBase.getTeamById(teamId);
-        if (team == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Project project = Project.create(name, team);
-        DataBase.addProject(project);
-        return ResponseEntity.ok(project);
-    }
 
-    @RequestMapping("/getAllProjects")
-    public ResponseEntity<ArrayList<Project>> getAllProjects() {
-        ArrayList<Project> projects = DataBase.getProjects();
-        return ResponseEntity.ok(projects);
-    }
-    @RequestMapping("/assignTeamToProject")
-    public ResponseEntity<Project> assignTeamToProject(@RequestParam String projectId, @RequestParam String teamId) {
-        Project project = DataBase.getProjectById(projectId);
-        if (project == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Team team = DataBase.getTeamById(teamId);
-        if (team == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        DataBase.removeProject(project);
-        project.assignTeam(team);
-        DataBase.addProject(project);
-        return ResponseEntity.ok(project);
-    }
-    @RequestMapping("/getProjectById")
-    public ResponseEntity<Project> getProjectById(@RequestParam String projectId) {
-        Project project = DataBase.getProjectById(projectId);
-        if (project == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(project);
-    }
     @RequestMapping("/getTeamProjects")
     public ResponseEntity<ArrayList<Project>> getTeamProjects(@RequestParam String teamId) {
         Team team = DataBase.getTeamById(teamId);
@@ -189,6 +150,16 @@ public class Main {
         DataBase.addMachine(machine);
         return ResponseEntity.ok(machine);
     }
+    @RequestMapping("/deleteMachine")
+    public ResponseEntity<Machine> deleteMachine(@RequestParam String machineId) {
+        Machine machine = DataBase.getMachineById(machineId);
+        if (machine == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        DataBase.removeMachine(machine);
+        return ResponseEntity.ok(machine);
+    }
+
     @RequestMapping("/changeMachineStatus")
     public ResponseEntity<Machine> changeMachineStatus(@RequestParam String machineId, @RequestParam String status) {
         Machine machine = DataBase.getMachineById(machineId);
@@ -200,6 +171,53 @@ public class Main {
         DataBase.addMachine(machine);
         return ResponseEntity.ok(machine);
     }    
-    
+
+    @RequestMapping("/getMachineReservations")
+    public ResponseEntity<ArrayList<Reservation>> getMachineReservations(@RequestParam String machineId) {
+        ArrayList<Reservation> reservations = DataBase.getMachineReservations(machineId);
+        return ResponseEntity.ok(reservations);
+    }
+    @RequestMapping("/getTeamReservations")
+    public ResponseEntity<ArrayList<Reservation>> getTeamReservations(@RequestParam String teamId) {
+        ArrayList<Reservation> reservations = DataBase.getTeamReservations(teamId);
+        return ResponseEntity.ok(reservations);
+    }
+    @RequestMapping("/reserveMachine")
+    public ResponseEntity<Reservation> reserveMachine(@RequestParam String machineId, @RequestParam String teamId, @RequestParam String startTime, @RequestParam String endTime) {
+        Machine machine = DataBase.getMachineById(machineId);
+        if (machine == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Team team = DataBase.getTeamById(teamId);
+        if (team == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        try {
+            Reservation reservation = Reservation.create(machine, team, startTime, endTime);    
+            DataBase.addReservation(reservation);
+            return ResponseEntity.ok(reservation);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+    @RequestMapping("/cancelReservation")
+    public ResponseEntity<Reservation> cancelReservation(@RequestParam String reservationId) {
+        Reservation reservation = DataBase.getReservationById(reservationId);
+        if (reservation == null) {
+            // return NotFound  and a special message
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        DataBase.removeReservation(reservation);
+        return ResponseEntity.ok(reservation);
+    }
+    @RequestMapping("/getReservation")
+    public ResponseEntity<Reservation> getReservation(@RequestParam String reservationId) {
+        Reservation reservation = DataBase.getReservationById(reservationId);
+        if (reservation == null) {
+            // return NotFound  and a special message
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(reservation);
+    }
 
 }

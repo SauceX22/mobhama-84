@@ -1,12 +1,11 @@
 package com.example.Project;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class Schedule {
     
     ArrayList<Reservation> reservations;
+    Machine machine;
     Schedule(){
         this.reservations = new ArrayList<Reservation>();
     }

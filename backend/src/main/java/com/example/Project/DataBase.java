@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.sql.SQLOutput;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
@@ -19,17 +20,27 @@ public class DataBase {
     final private static String TEAMSINFO_PATH = PATH + "/teams.csv";
     final private static String PROJECTSINFO_PATH = PATH + "/projects.csv";
     final private static String MACHINESINFO_PATH = PATH + "/machines.csv";
+    final private static String RESERVATIONSINFO_PATH = PATH + "/reservations.csv";
 
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Team> teams = new ArrayList<>();
     private static ArrayList<Project> projects = new ArrayList<>();
     private static ArrayList<Machine> machines = new ArrayList<>();
+    private static ArrayList<Reservation> reservations = new ArrayList<>();
+
+    public static void load() {
+        DataBase.loadUsers();
+        DataBase.loadTeams();
+        DataBase.loadProjects();
+        DataBase.loadMachines();
+        DataBase.loadReservations();
+    }
 
     public static void loadProjects() {
         // header projectId,name,teamId
         try {
-            File userInfoFile = new File(PROJECTSINFO_PATH);
-            Scanner reader = new Scanner(userInfoFile);
+            File projectsInfoFile = new File(PROJECTSINFO_PATH);
+            Scanner reader = new Scanner(projectsInfoFile);
             reader.nextLine(); // header
             while (reader.hasNextLine()) {
                 String data = reader.nextLine();
@@ -59,7 +70,7 @@ public class DataBase {
     }
 
     public static void loadUsers() {
-        //header = {"name", "id", "PhoneNumber", "email", "type", "reseeachInterest"};
+        //header = {"name", "id", "PhoneNumber", "email", "type", "researchInterest", avatar};
         try {
             File userInfoFile = new File(USERSINFO_PATH);
             Scanner reader = new Scanner(userInfoFile);
@@ -68,9 +79,9 @@ public class DataBase {
                 String data = reader.nextLine();
                 String[] dataArr = data.split(",");
                 if (dataArr[4].equals("Admin")) {
-                    users.add(new Admin(dataArr[0], dataArr[2], dataArr[3], dataArr[1]));
+                    users.add(new Admin(dataArr[0], dataArr[2], dataArr[3], dataArr[1], dataArr[6]));
                 } else {
-                    TeamMember tm = new TeamMember(dataArr[0], dataArr[2], dataArr[3], dataArr[1]);
+                    TeamMember tm = new TeamMember(dataArr[0], dataArr[2], dataArr[3], dataArr[1], dataArr[6]);
                     tm.setResearchInterest(dataArr[5]);
                     users.add(tm);
                 }
@@ -186,7 +197,7 @@ public class DataBase {
         File userInfoFile = new File(USERSINFO_PATH);
         try(FileWriter writer = new FileWriter(userInfoFile)) {
             
-            writer.write("name,id,PhoneNumber,email,type,reseeachInterest\n");
+            writer.write("name,id,PhoneNumber,email,type,researchInterest,avatar\n");
             for (User user : users) {
                 String data = user.getName() + "," + user.getId() + "," + user.getPhoneNum() + "," + user.getEmail() + "," + user.getClass().getSimpleName();
                 if (user.getClass().getSimpleName().equals("TeamMember")) {
@@ -194,6 +205,7 @@ public class DataBase {
                 }else{
                     data += ",";
                 }
+                data += "," + user.getAvatar();
                 writer.write(data + "\n");
             }
             
@@ -277,11 +289,13 @@ public class DataBase {
             while (reader.hasNextLine()) {
                 String data = reader.nextLine();
                 String[] dataArr = data.split(",");
-                machines.add(new Machine(dataArr[1], dataArr[0], dataArr[2]));
+                Machine machine = new Machine(dataArr[1], dataArr[0], dataArr[2]);
+                machines.add(machine);
             }
             reader.close();
         }catch(Exception e){
             System.out.println("Error loading machines");
+            System.out.println(e);
         }
     }
     public static void saveMachines() {
@@ -315,5 +329,99 @@ public class DataBase {
     public static void removeMachine(Machine machine) {
         machines.remove(machine);
         saveMachines();
+    }
+
+    // reservations
+    public static void loadReservations() {
+        // header = reservationId,machineId,teamId,startTime,endTime
+        try {
+            File userInfoFile = new File(RESERVATIONSINFO_PATH);
+            Scanner reader = new Scanner(userInfoFile);
+            reader.nextLine(); // header
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                String[] dataArr = data.split(",");
+                Machine machine = getMachineById(dataArr[1]);
+                Team team = getTeamById(dataArr[2]);
+                if (machine != null && team != null) {
+                    // //date Format: yy-mm-ddThh:mm:ss
+                    // String[] start = dataArr[3].split("T");
+                    // String[] end = dataArr[4].split("T");
+                    // String[] startDate = start[0].split("-");
+                    // String[] startTime = start[1].split(":");
+                    // String[] endDate = end[0].split("-");
+                    // String[] endTime = end[1].split(":");
+                    Reservation reservation = new Reservation(dataArr[0],machine, team, dataArr[3], dataArr[4]);
+                    reservations.add(reservation);          
+                }
+            }
+            reader.close();
+        }catch(Exception e){
+            System.out.println("Error loading reservations");
+        }
+    }
+    public static void saveReservations() {
+        // write reservations infos back to file
+        File userInfoFile = new File(RESERVATIONSINFO_PATH);
+        try(FileWriter writer = new FileWriter(userInfoFile);) {   
+            writer.write("reservationId,machineId,teamId,startTime,endTime\n");
+            for (Reservation reservation : reservations) {
+                String data = reservation.id + "," + reservation.machine.getId() + "," + reservation.team.getId() + "," + reservation.startTime.toString() + "," + reservation.endTime.toString();
+                writer.write(data + "\n");
+            }
+        } catch (Exception e) {
+            System.out.println("Error saving reservations");
+        }
+    }
+    public static ArrayList<Reservation> getReservations() {
+        return reservations;
+    }
+    public static Reservation getReservationById(String id) {
+        for (Reservation reservation : reservations) {
+            if (reservation.id.equals(id)) {
+                return reservation;
+            }
+        }
+        return null;
+    }
+    public static void addReservation(Reservation reservation) {
+        // check no other reservation for the same machine at the same time
+        for (Reservation res : reservations) {
+            if (res.getMachine().getId().equals(reservation.getMachine().getId())) {
+                if (reservation.getStartTime().isAfter(res.getStartTime()) && reservation.getStartTime().isBefore(res.getEndTime())) {
+                    throw new IllegalArgumentException("Machine is already reserved at this time");
+                }
+                if (reservation.getEndTime().isAfter(res.getStartTime()) && reservation.getEndTime().isBefore(res.getEndTime())) {
+                    throw new IllegalArgumentException("Machine is already reserved at this time");
+                }
+                if (reservation.getStartTime().isBefore(LocalDateTime.now())) {
+                    throw new IllegalArgumentException("Start time must be in the future");
+                }
+            }
+        }
+        reservations.add(reservation);
+        saveReservations();
+    }
+    public static void removeReservation(Reservation reservation) {
+        reservations.remove(reservation);
+        saveReservations();
+    }
+    public static ArrayList<Reservation> getMachineReservations(String machineId) {
+        ArrayList<Reservation> machineReservations = new ArrayList<>();
+        for (Reservation reservation: reservations) {
+            if (reservation.getMachine().getId().equals(machineId)) {
+                machineReservations.add(reservation);
+            }
+        }
+        return machineReservations;
+    }
+    public static ArrayList<Reservation> getTeamReservations(String teamId) {
+        ArrayList<Reservation> teamReservations = new ArrayList<>();
+        for (Reservation reservation: reservations) {
+            if (reservation.getTeam().getId().equals(teamId)) {
+                teamReservations.add(reservation);
+            }
+        }
+        return teamReservations;
     }
 }

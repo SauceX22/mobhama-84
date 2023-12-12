@@ -7,12 +7,13 @@ abstract public class User {
     protected String id;
     protected String PhoneNum;
     protected String email;
-    
+    protected String avatar;
 
-    public User(){
-        this("","","", "");
+    public User() {
+        this.id = UUID.randomUUID().toString();
     }
-    public User(String name, String PhoneNum, String email, String id){
+    public User(String name, String PhoneNum, String email, String id, String avatar){
+        this.avatar = avatar;
         this.name = name;
         this.PhoneNum = PhoneNum;
         this.email = email;
@@ -50,5 +51,11 @@ abstract public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    public String getAvatar() {
+        return avatar;
     }
 }

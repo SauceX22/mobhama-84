@@ -1,4 +1,6 @@
-name,id,PhoneNumber,email,type,reseeachInterest
-Mo,c417e33e-080f-4736-ab64-aedd10a2e20c,0554014433,kfupm@hell.com,TeamMember,Ai and stuff
-Abdullaj,ca33132b-b508-4460-ab46-5570cfdcbebe,0559964921,kfupmAbd@hell.com,Admin,
-Ali,7fc5dce9-d8b5-4f48-867c-61e9b473687f,01248901237,jasd@hell.com,TeamMember,Ai and stuff
+name,id,PhoneNumber,email,type,researchInterest,avatar
+Abdullah,67de2834-a128-4786-abb3-7496a4bdbf5a,05363121,12781271@dsf.com,TeamMember,AI no,imaeg.com/12
+Ali,ac6e074b-69d4-473a-84e2-dfdf3d084dac,05363121,12781271@dsf.com,TeamMember,AI no,imaeg.com/12
+Ali,12b8c991-3138-4e45-88bf-178f2eddd2c4,05363121,12781271@dsf.com,TeamMember,AI no,imaeg.com/12
+Ali,58623e6a-2334-41e0-8b3d-61161bccf12d,05363121,12781271@dsf.com,TeamMember,AI no,imaeg.com/12
+Ali,f7dc1efc-1d67-4388-8301-52c99c80332e,05363121,12781271@dsf.com,TeamMember,AI no,imaeg.com/12
