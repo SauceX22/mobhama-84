@@ -12,7 +12,6 @@ public class ProjectController {
     // Projects
     @GetMapping()
     public ResponseEntity<ArrayList<Project>> getAllProjects() {
-        System.out.println("Projects_______________________________________");
         ArrayList<Project> projects = DataBase.getProjects();
         return ResponseEntity.ok(projects);
     }
@@ -62,6 +61,7 @@ public class ProjectController {
         DataBase.removeProject(project);
         return ResponseEntity.ok(true);
     }
+
     
     // @RequestMapping("/getProjectById")
     // public ResponseEntity<Project> getProjectById(@RequestParam String projectId) {

@@ -23,12 +23,12 @@ public class Main {
            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
-    @RequestMapping("/Project")
-    @GetMapping
-    public ResponseEntity<ArrayList<Project>> getProjects(@RequestParam String userId) {
-        ArrayList<Project> projects = DataBase.getUserProjects(userId);
-        return ResponseEntity.ok(projects);
-    }
+    // @RequestMapping("/Project")
+    // @GetMapping
+    // public ResponseEntity<ArrayList<Project>> getProjects(@RequestParam String userId) {
+    //     ArrayList<Project> projects = DataBase.getUserProjects(userId);
+    //     return ResponseEntity.ok(projects);
+    // }
 
     // Teams
 
@@ -85,34 +85,34 @@ public class Main {
         return ResponseEntity.ok(team);
     }
 
-    @RequestMapping("/getUser")
-    public static ResponseEntity<User> getUser(@RequestParam String id) {
-        User user = DataBase.getUserInfo(id);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(user);
-    }
+    // @RequestMapping("/getUser")
+    // public static ResponseEntity<User> getUser(@RequestParam String id) {
+    //     User user = DataBase.getUserInfo(id);
+    //     if (user == null) {
+    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //     }
+    //     return ResponseEntity.ok(user);
+    // }
 
-    @RequestMapping("/getUsers") 
-    public ResponseEntity<ArrayList<User>> getUsers() {
-        ArrayList<User> users = DataBase.getUsers();
-        return ResponseEntity.ok(users);
-    }
+    // @RequestMapping("/getUsers") 
+    // public ResponseEntity<ArrayList<User>> getUsers() {
+    //     ArrayList<User> users = DataBase.getUsers();
+    //     return ResponseEntity.ok(users);
+    // }
 
-    @RequestMapping("/createUser")
-    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String password, @RequestParam String type, @RequestParam String researchInterest, @RequestParam String avatar) {
-        if (type.equals("Admin")) {
-            Admin user = Admin.create(name, phoneNum, email, avatar);
-            DataBase.addUser(user);
-            return ResponseEntity.ok(user);
-        } else {
-            TeamMember user = TeamMember.create(name, phoneNum, email, avatar);
-            user.setResearchInterest(researchInterest);
-            DataBase.addUser(user);
-            return ResponseEntity.ok(user);
-        }
-    }
+    // @RequestMapping("/createUser")
+    // public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String password, @RequestParam String type, @RequestParam String researchInterest, @RequestParam String avatar) {
+    //     if (type.equals("Admin")) {
+    //         Admin user = Admin.create(name, phoneNum, email, avatar);
+    //         DataBase.addUser(user);
+    //         return ResponseEntity.ok(user);
+    //     } else {
+    //         TeamMember user = TeamMember.create(name, phoneNum, email, avatar);
+    //         user.setResearchInterest(researchInterest);
+    //         DataBase.addUser(user);
+    //         return ResponseEntity.ok(user);
+    //     }
+    // }
 
     @RequestMapping("/getTeamProjects")
     public ResponseEntity<ArrayList<Project>> getTeamProjects(@RequestParam String teamId) {

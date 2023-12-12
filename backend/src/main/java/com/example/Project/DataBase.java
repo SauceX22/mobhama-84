@@ -137,6 +137,17 @@ public class DataBase {
         }
         return userTeams;
     }
+    public static boolean removeUser(String id) {
+        User user = DataBase.getUserInfo(id);
+        if (user == null) {
+            return false;
+        }
+        ArrayList<Team> teams = DataBase.getUserTeams(id);
+        for (Team team : teams) {
+            team.unassignMember(user);
+        }
+        return true;
+    }
 
     
     public static String login(String username, String password) {
@@ -259,6 +270,24 @@ public class DataBase {
         users.add(user);
         saveUsers();
     }
+    public static User updateUserInfo(String id, String name, String phoneNum, String email, String researchInterest, String avatar) {
+        User user = DataBase.getUserInfo(id);
+        if(user == null) {
+            return null;
+        }
+        users.remove(users);
+
+        user.setName(name);
+        user.setEmail(email);
+        //user.setPassword(password);
+        user.setPhoneNum(phoneNum);
+        if (user instanceof TeamMember) {
+            ((TeamMember) user).setResearchInterest(researchInterest);
+        }
+        user.setAvatar(avatar);
+        DataBase.addUser(user);
+        return user;
+    }
     public static ArrayList<User> getUsers() {
         return users;
     }
@@ -298,6 +327,7 @@ public class DataBase {
             System.out.println(e);
         }
     }
+
     public static void saveMachines() {
         // write machines infos back to file
         File userInfoFile = new File(MACHINESINFO_PATH);
@@ -311,6 +341,7 @@ public class DataBase {
             System.out.println("Error saving machines");
         }
     }
+
     public static ArrayList<Machine> getMachines() {
         return machines;
     }
