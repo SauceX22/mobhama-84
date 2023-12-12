@@ -80,10 +80,83 @@ return:
 
 // get all teams
 GET: /Team
-
 return:
+[
+    {
+        "name": "Team1",
+        "id": "ac5bd4f4-cfce-47cd-84cb-6b67f3899843",
+        "members": [],
+        "projectIds": [],
+        "teamId": "ac5bd4f4-cfce-47cd-84cb-6b67f3899843"
+    },
+    {
+        "name": "Team1",
+        "id": "ee690892-0cb2-4865-8438-4a6b493a71ef",
+        "members": [
+            {
+                "name": "Mo",
+                "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+                "email": "12781271@dsf.com",
+                "avatar": "imaeg.com/12",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "AI no",
+                "phoneNum": "05363121"
+            },
+            {
+                "name": "Ali",
+                "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+                "email": "sdsa2@dsf.co",
+                "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "UI/ux",
+                "phoneNum": "05318912689"
+            }
+        ],
+        "projectIds": [],
+        "teamId": "ee690892-0cb2-4865-8438-4a6b493a71ef"
+    }
+]
+
 
 /POST: /Team
 parameters: name:TeamName  usersId:id1,id2   //list
+return:
+{
+    "name": "Team1",
+    "id": "ee690892-0cb2-4865-8438-4a6b493a71ef",
+    "members": [
+        {
+            "name": "Mo",
+            "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+            "email": "12781271@dsf.com",
+            "avatar": "imaeg.com/12",
+            "role": "TEAM_MEMBER",
+            "researchInterest": "AI no",
+            "phoneNum": "05363121"
+        },
+        {
+            "name": "Ali",
+            "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+            "email": "sdsa2@dsf.co",
+            "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+            "role": "TEAM_MEMBER",
+            "researchInterest": "UI/ux",
+            "phoneNum": "05318912689"
+        }
+    ],
+    "projectIds": [],
+    "teamId": "ee690892-0cb2-4865-8438-4a6b493a71ef"
+}
+
+
+
+// Projects
+
+
+POST: /Project
+parameters: {name: String, teamId: String}
+return:
+
+
 	
 
