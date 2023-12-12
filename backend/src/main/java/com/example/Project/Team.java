@@ -50,7 +50,12 @@ public class Team {
         return new Team();
     }
 
-    
+    public String getTeamId(){
+        return id;
+    }
+    public void unassignMember(User member){
+        members.remove(member);
+    }
     public void addMember(TeamMember member){
         members.add(member);
     }
@@ -66,7 +71,4 @@ public class Team {
     public String getId(){
         return id;
     }
-    public void unassignMember(User user) {
-        members.remove(user);
     }
-}

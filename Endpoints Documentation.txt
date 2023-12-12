@@ -1,4 +1,4 @@
-/login
+/login GET
 parameters:{username:String, password:String} 
 return:User class
 example
@@ -11,4 +11,69 @@ example
     "phoneNum": "05363121"
 }
 
-/
+// all /User endpoints
+/User
+GET:
+// get all users
+example:
+[
+    {
+        "name": "Mo",
+        "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+        "email": "12781271@dsf.com",
+        "avatar": "imaeg.com/12",
+        "role": "TEAM_MEMBER",
+        "researchInterest": "AI no",
+        "phoneNum": "05363121"
+    },
+    {
+        "name": "Hamoud",
+        "id": "bbf39e55-4500-4729-b502-1c755c0150ba",
+        "email": "kfupm@dsf.com",
+        "avatar": "imaeg.com/12",
+        "role": "TEAM_MEMBER",
+        "researchInterest": "AI no",
+        "phoneNum": "0531256235"
+    }
+]
+
+GET: /User/{id}
+{
+    "name": "Mo",
+    "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+    "email": "12781271@dsf.com",
+    "avatar": "imaeg.com/12",
+    "role": "TEAM_MEMBER",
+    "researchInterest": "AI no",
+    "phoneNum": "05363121"
+}
+
+// return team of a user
+Get:
+/User/teams
+parameters: {id:String}
+////////////////////////////////////////////
+
+POST: /User
+parameters example:
+	name:Hamoud
+	phoneNum:0531256235
+	email:kfupm@dsf.com
+	type:TeamMember
+	researchInterest:AI no
+	avatar:imaeg.com/12
+
+return:
+
+
+/////////////
+
+//Team
+
+// get all teams
+GET: /Team
+
+return:
+
+/POST
+
