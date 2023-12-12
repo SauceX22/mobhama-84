@@ -1,6 +1,5 @@
-
 export interface User {
-    id: string; // extra
+    id: string;
     name: string;
     phoneNum: string;
     email: string;
@@ -16,7 +15,7 @@ export interface Machine {
 export interface Project {
     id: string;
     title: string;
-    description: string; // extra
+    description: string;
     avatarFallback: string;
     owner: string;
 }
@@ -34,7 +33,7 @@ export interface Reservation {
     bookedOn: Date;
     status: ReservationStatus;
     startTime: Date;
-    duration: number;
+    endTime: Date;
 }
 
 export interface Team {
@@ -45,7 +44,6 @@ export interface Team {
 }
 
 // Request types
-
 export interface MachineRequest {
     name: string;
 }
