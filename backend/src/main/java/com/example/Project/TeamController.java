@@ -6,12 +6,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -22,8 +17,8 @@ public class TeamController {
         return ResponseEntity.ok(DataBase.getTeams());
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Team> getTeamById(@RequestParam String teamId) {
-        Team team = DataBase.getTeamById(teamId);
+    public ResponseEntity<Team> getTeamById(@PathVariable String id) {
+        Team team = DataBase.getTeamById(id);
         return ResponseEntity.ok(team);
     }
     @GetMapping("/{id}/projects")
@@ -55,13 +50,13 @@ public class TeamController {
         for (String id : usersIds) {
             User user = DataBase.getUserInfo(id);
             if (user != null) {
-                team.addMember(DataBase.getUserInfo(id));
+                team.addMember(user);
             }
         }
         DataBase.addTeam(team);
         return ResponseEntity.ok(team);
     }
-    
+
     @PutMapping("/addUser/{id}")
     public ResponseEntity<Team> addUserToTeam(@RequestParam String userId, @RequestParam String teamId) {
         Team team = DataBase.getTeamById(teamId);

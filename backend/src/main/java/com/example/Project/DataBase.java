@@ -40,14 +40,12 @@ public class DataBase {
             while (reader.hasNextLine()) {
                 String data = reader.nextLine();
                 String[] dataArr = data.split(",");
-                Team team = getTeam(dataArr[0]);
+                Team team = getTeam(dataArr[2]);
+                Project project = new Project(dataArr[1], team, dataArr[2]);
                 if (team != null) {
-                    Project project = new Project(dataArr[1], DataBase.getTeam(dataArr[0]), dataArr[2]);
                     team.getProjectIds().add(project.getProjectId());
-                    projects.add(project);
-                }else {
-                    System.out.println("Team with id" + dataArr[2] +  "not found");
-                }   
+                }
+                projects.add(project);
             }
             reader.close();
         }catch(Exception e){
@@ -141,6 +139,7 @@ public class DataBase {
         for (Team team : teams) {
             team.unassignMember(user);
         }
+        users.remove(user);
         return true;
     }
 
@@ -377,7 +376,7 @@ public class DataBase {
                     User bookedBy = getUserInfo(dataArr[5]);
                     reservation.setBookedBy(bookedBy);
                     reservation.setBookedOn(LocalDateTime.parse(dataArr[6]));
-                    reservations.add(reservation);          
+                    addReservation(reservation);
                 }
             }
             reader.close();
@@ -416,23 +415,27 @@ public class DataBase {
         }
         return null;
     }
-    public static void addReservation(Reservation reservation) {
+    public static boolean addReservation(Reservation reservation) {
         // check no other reservation for the same machine at the same time
         for (Reservation res : reservations) {
             if (res.getMachine().getId().equals(reservation.getMachine().getId())) {
-                if (reservation.getStartTime().isAfter(res.getStartTime()) && reservation.getStartTime().isBefore(res.getEndTime())) {
-                    throw new IllegalArgumentException("Machine is already reserved at this time");
+                if ((reservation.getStartTime().isAfter(res.getStartTime()) || reservation.getStartTime().equals(res.getStartTime())) && (reservation.getStartTime().isBefore(res.getEndTime()) || reservation.getStartTime().equals(res.getEndTime()))) {
+                    return false;
                 }
                 if (reservation.getEndTime().isAfter(res.getStartTime()) && reservation.getEndTime().isBefore(res.getEndTime())) {
-                    throw new IllegalArgumentException("Machine is already reserved at this time");
+                    return false;
+                    //throw new IllegalArgumentException("Machine is already reserved at this time");
                 }
                 if (reservation.getStartTime().isBefore(LocalDateTime.now())) {
-                    throw new IllegalArgumentException("Start time must be in the future");
+                    return false;
+                    //throw new IllegalArgumentException("Start time must be in the future");
                 }
             }
+            
         }
         reservations.add(reservation);
         saveReservations();
+        return true;
     }
     public static void removeReservation(Reservation reservation) {
         reservations.remove(reservation);

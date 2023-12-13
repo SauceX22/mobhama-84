@@ -24,20 +24,20 @@ public class UserControl {
         }
         return ResponseEntity.ok(user);
     }
-    @GetMapping("/teams")
-    public ResponseEntity<ArrayList<Team>> getUserTeams(@RequestParam String userId) {
+    @GetMapping("/{id}/teams")
+    public ResponseEntity<ArrayList<Team>> getUserTeams(@PathVariable String id) {
         try {
-            ArrayList<Team> teams = DataBase.getUserTeams(userId);
+            ArrayList<Team> teams = DataBase.getUserTeams(id);
             return ResponseEntity.ok(teams);
         } catch (Exception e) {
             // Log the exception
-            e.printStackTrace();
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String role, @RequestParam String researchInterest, @RequestParam String avatar) {
+    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String role, @RequestParam String researchInterest, @RequestParam(defaultValue = "https://avatars.githubusercontent.com/u/13651651?v=4") String avatar) {
         if (avatar.isEmpty() || avatar.isBlank()) {
             avatar = "https://avatars.githubusercontent.com/u/13651651?v=4";
         }
@@ -70,8 +70,9 @@ public class UserControl {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteUser(@PathVariable String id) {
+        System.out.println("removing " + id);
         boolean removed = DataBase.removeUser(id);
-        if (removed) {
+        if (!removed) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(true, HttpStatus.OK);

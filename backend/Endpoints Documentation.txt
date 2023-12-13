@@ -1,0 +1,465 @@
+/login GET
+parameters:{username:String, password:String} 
+return:User class
+example
+{
+    "name": "Mo",
+    "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+    "email": "12781271@dsf.com",
+    "avatar": "imaeg.com/12",
+    "researchInterest": "AI no",
+    "phoneNum": "05363121"
+}
+
+// all /User endpoints
+/User
+GET:
+// get all users
+example:
+[
+    {
+        "name": "Mo",
+        "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+        "email": "12781271@dsf.com",
+        "avatar": "imaeg.com/12",
+        "role": "TEAM_MEMBER",
+        "researchInterest": "AI no",
+        "phoneNum": "05363121"
+    },
+    {
+        "name": "Hamoud",
+        "id": "bbf39e55-4500-4729-b502-1c755c0150ba",
+        "email": "kfupm@dsf.com",
+        "avatar": "imaeg.com/12",
+        "role": "TEAM_MEMBER",
+        "researchInterest": "AI no",
+        "phoneNum": "0531256235"
+    }
+]
+
+GET: /User/{id}
+{
+    "name": "Mo",
+    "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+    "email": "12781271@dsf.com",
+    "avatar": "imaeg.com/12",
+    "role": "TEAM_MEMBER",
+    "researchInterest": "AI no",
+    "phoneNum": "05363121"
+}
+
+// return all teams of a user
+Get:
+/User/{id}/teams
+return:
+[
+    {
+        "name": "Team1",
+        "id": "83005652-76c2-471c-9b81-85d4563af19b",
+        "members": [
+            {
+                "name": "Mo",
+                "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+                "email": "12781271@dsf.com",
+                "avatar": "imaeg.com/12",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "AI no",
+                "phoneNum": "05363121"
+            },
+            {
+                "name": "Ali",
+                "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+                "email": "sdsa2@dsf.co",
+                "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "UI/ux",
+                "phoneNum": "05318912689"
+            }
+        ],
+        "projectIds": [],
+        "teamId": "83005652-76c2-471c-9b81-85d4563af19b"
+    }
+]
+
+ 
+POST: /User
+parameters example:
+	name:Yahia Saleh
+	phoneNum:053128941
+	email:kfupm222@dsf.com
+	role:ADMIN   // ADMIN OR TEAM_MEMBER
+	researchInterest:UI
+	avatar:imaeg.com/1212
+
+return:
+{
+    "name": "Yahia Saleh",
+    "id": "1d9b9fcb-bbd8-4a89-858a-854eb4a9079f",
+    "email": "kfupm222@dsf.com",
+    "avatar": "imaeg.com/1212",
+    "role": "TEAM_MEMBER",
+    "researchInterest": "UI",
+    "phoneNum": "053128941"
+}
+
+/DELETE: User/{id}
+return: true or 404
+
+
+
+/////////////
+
+//Team
+
+// get all teams
+GET: /Team
+return:
+[
+    {
+        "name": "Team1",
+        "id": "ac5bd4f4-cfce-47cd-84cb-6b67f3899843",
+        "members": [],
+        "projectIds": [],
+        "teamId": "ac5bd4f4-cfce-47cd-84cb-6b67f3899843"
+    },
+    {
+        "name": "Team1",
+        "id": "ee690892-0cb2-4865-8438-4a6b493a71ef",
+        "members": [
+            {
+                "name": "Mo",
+                "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+                "email": "12781271@dsf.com",
+                "avatar": "imaeg.com/12",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "AI no",
+                "phoneNum": "05363121"
+            },
+            {
+                "name": "Ali",
+                "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+                "email": "sdsa2@dsf.co",
+                "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "UI/ux",
+                "phoneNum": "05318912689"
+            }
+        ],
+        "projectIds": [],
+        "teamId": "ee690892-0cb2-4865-8438-4a6b493a71ef"
+    }
+]
+
+
+/POST: /Team
+parameters: name:TeamName  usersIds:id1,id2   //list
+return:
+{
+    "name": "Team1",
+    "id": "ee690892-0cb2-4865-8438-4a6b493a71ef",
+    "members": [
+        {
+            "name": "Mo",
+            "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+            "email": "12781271@dsf.com",
+            "avatar": "imaeg.com/12",
+            "role": "TEAM_MEMBER",
+            "researchInterest": "AI no",
+            "phoneNum": "05363121"
+        },
+        {
+            "name": "Ali",
+            "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+            "email": "sdsa2@dsf.co",
+            "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+            "role": "TEAM_MEMBER",
+            "researchInterest": "UI/ux",
+            "phoneNum": "05318912689"
+        }
+    ],
+    "projectIds": [],
+    "teamId": "ee690892-0cb2-4865-8438-4a6b493a71ef"
+}
+
+
+
+// Projects
+
+/GET:/Project
+return:
+[
+    {
+        "name": "TheProject1",
+        "team": {
+            "name": "Team1",
+            "id": "83005652-76c2-471c-9b81-85d4563af19b",
+            "members": [
+                {
+                    "name": "Mo",
+                    "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+                    "email": "12781271@dsf.com",
+                    "avatar": "imaeg.com/12",
+                    "role": "TEAM_MEMBER",
+                    "researchInterest": "AI no",
+                    "phoneNum": "05363121"
+                },
+                {
+                    "name": "Ali",
+                    "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+                    "email": "sdsa2@dsf.co",
+                    "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+                    "role": "TEAM_MEMBER",
+                    "researchInterest": "UI/ux",
+                    "phoneNum": "05318912689"
+                }
+            ],
+            "projectIds": [],
+            "teamId": "83005652-76c2-471c-9b81-85d4563af19b"
+        },
+        "projectId": "1ba7a6f9-074c-46b8-b8b8-7eb68ccf5490"
+    }
+]
+
+/GET: /Project/{id}
+return:
+{
+    "name": "TheProject1",
+    "team": {
+        "name": "Team1",
+        "id": "83005652-76c2-471c-9b81-85d4563af19b",
+        "members": [
+            {
+                "name": "Mo",
+                "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+                "email": "12781271@dsf.com",
+                "avatar": "imaeg.com/12",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "AI no",
+                "phoneNum": "05363121"
+            },
+            {
+                "name": "Ali",
+                "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+                "email": "sdsa2@dsf.co",
+                "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "UI/ux",
+                "phoneNum": "05318912689"
+            }
+        ],
+        "projectIds": [
+            "83005652-76c2-471c-9b81-85d4563af19b"
+        ],
+        "teamId": "83005652-76c2-471c-9b81-85d4563af19b"
+    },
+    "projectId": "83005652-76c2-471c-9b81-85d4563af19b"
+}
+
+
+POST: /Project
+parameters: {name: String, teamId: String}
+return:
+{
+    "name": "TheProject1",
+    "team": {
+        "name": "Team1",
+        "id": "83005652-76c2-471c-9b81-85d4563af19b",
+        "members": [
+            {
+                "name": "Mo",
+                "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+                "email": "12781271@dsf.com",
+                "avatar": "imaeg.com/12",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "AI no",
+                "phoneNum": "05363121"
+            },
+            {
+                "name": "Ali",
+                "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+                "email": "sdsa2@dsf.co",
+                "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "UI/ux",
+                "phoneNum": "05318912689"
+            }
+        ],
+        "projectIds": [],
+        "teamId": "83005652-76c2-471c-9b81-85d4563af19b"
+    },
+    "projectId": "1ba7a6f9-074c-46b8-b8b8-7eb68ccf5490"
+}
+
+PUT: /Project/{id}
+parameters: {id:String, teamId: String}
+
+
+
+// Machine
+GET: /Machine
+return:
+[
+    {
+        "name": "Machine1",
+        "id": "d300087f-6f11-43a8-b9ed-49b7ccf279f0"
+    },
+    {
+        "name": "Machine2",
+        "id": "ff8bc1a0-f25a-45cb-a109-be3718d3bd5c"
+    },
+    {
+        "name": "Machine3",
+        "id": "92b4b3ff-86c4-4f6d-9bc8-01b662469e45"
+    },
+    {
+        "name": "Machine4-new",
+        "id": "26da44e3-2a6d-46b7-aae5-fdea5a164f67"
+    }
+]
+
+
+/GET: /Machine/{id}
+return:
+{
+    "name": "Machine4-new",
+    "id": "26da44e3-2a6d-46b7-aae5-fdea5a164f67"
+}
+
+
+/POST: /Machine
+parameters: {name: }
+return:
+{
+    "name": "Machine4-new",
+    "id": "26da44e3-2a6d-46b7-aae5-fdea5a164f67"
+}
+
+
+/PUT: /Machine/{id}
+parameters: {name: }
+return 
+{
+    "name": "Machine4-new",
+    "id": "26da44e3-2a6d-46b7-aae5-fdea5a164f67"
+}
+
+
+/DELETE /Machine/{id}
+return: true/false
+
+
+
+/////////////////////////////////////////////////////////////////////
+Reservations
+
+GET: /Reservation
+
+GET: /Reservation/{id}
+
+Post: /Reservation
+parameters: {userId, machineId, teamId, startTime, endTime}
+{
+    "id": "1077e82f-f47e-4171-b052-dc7bd39f685a",
+    "machine": {
+        "name": "Machine2",
+        "id": "ff8bc1a0-f25a-45cb-a109-be3718d3bd5c"
+    },
+    "team": {
+        "name": "Team1",
+        "id": "83005652-76c2-471c-9b81-85d4563af19b",
+        "members": [
+            {
+                "name": "Mo",
+                "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+                "email": "12781271@dsf.com",
+                "avatar": "imaeg.com/12",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "AI no",
+                "phoneNum": "05363121"
+            },
+            {
+                "name": "Ali",
+                "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+                "email": "sdsa2@dsf.co",
+                "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "UI/ux",
+                "phoneNum": "05318912689"
+            }
+        ],
+        "projectIds": [
+            "83005652-76c2-471c-9b81-85d4563af19b"
+        ],
+        "teamId": "83005652-76c2-471c-9b81-85d4563af19b"
+    },
+    "startTime": "2023-12-12T22:00:00",
+    "endTime": "2023-12-12T23:00:00",
+    "bookedBy": {
+        "name": "Ali",
+        "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+        "email": "sdsa2@dsf.co",
+        "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+        "role": "TEAM_MEMBER",
+        "researchInterest": "UI/ux",
+        "phoneNum": "05318912689"
+    },
+    "bookedOn": "2023-12-13T19:53:40.4809409"
+}
+
+PUT: /Reservation/{id}
+parameters: {userId,startTime, endTime} // id of the person that made the booking (must be in the team of the project that booked the reservation or an admin)
+return {
+    "id": "e5a5832d-2f9a-4c15-8944-591f2dd55e40",
+    "machine": {
+        "name": "Machine2",
+        "id": "ff8bc1a0-f25a-45cb-a109-be3718d3bd5c"
+    },
+    "team": {
+        "name": "Team1",
+        "id": "83005652-76c2-471c-9b81-85d4563af19b",
+        "members": [
+            {
+                "name": "Mo",
+                "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+                "email": "12781271@dsf.com",
+                "avatar": "imaeg.com/12",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "AI no",
+                "phoneNum": "05363121"
+            },
+            {
+                "name": "Ali",
+                "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+                "email": "sdsa2@dsf.co",
+                "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+                "role": "TEAM_MEMBER",
+                "researchInterest": "UI/ux",
+                "phoneNum": "05318912689"
+            }
+        ],
+        "projectIds": [
+            "83005652-76c2-471c-9b81-85d4563af19b"
+        ],
+        "teamId": "83005652-76c2-471c-9b81-85d4563af19b"
+    },
+    "startTime": "2023-12-13T23:18:00",
+    "endTime": "2023-12-13T23:25:00",
+    "bookedBy": {
+        "name": "Ali",
+        "id": "f69a8d8f-c34a-4789-9fb3-400db0925189",
+        "email": "sdsa2@dsf.co",
+        "avatar": "https://avatars.githubusercontent.com/u/13651651?v=4",
+        "role": "TEAM_MEMBER",
+        "researchInterest": "UI/ux",
+        "phoneNum": "05318912689"
+    },
+    "bookedOn": "2023-12-13T20:51:57.9916471"
+}
+
+DELETE: /Reservation/{id}
+parameters {id, userId}   (userId must be in the team or admin)
+return true/false
+
+
+	
+

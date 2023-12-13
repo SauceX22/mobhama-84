@@ -56,8 +56,9 @@ public class Team {
     public void unassignMember(User member){
         members.remove(member);
     }
+    
     public void addMember(TeamMember member){
-        members.add(member);
+        if (!members.contains(member)) members.add(member);
     }
     public void removeMember(TeamMember member){
         members.remove(member);
