@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/Team")
+@RequestMapping("/team")
 public class TeamController {
     @GetMapping()
     public ResponseEntity<ArrayList<Team>> getTeams() {

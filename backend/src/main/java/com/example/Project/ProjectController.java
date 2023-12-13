@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/Project")
+@RequestMapping("/project")
 public class ProjectController {
     // Projects
     @GetMapping()
