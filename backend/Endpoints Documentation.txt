@@ -458,6 +458,7 @@ return {
 
 DELETE: /Reservation/{id}
 parameters {id, userId}   (userId must be in the team or admin)
+return true/false
 
 
 	

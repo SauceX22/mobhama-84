@@ -17,11 +17,15 @@ public class ProjectController {
     }
 
     @PostMapping()
-    public ResponseEntity<Project> createProject(@RequestParam String name, @RequestParam String id) {
-        Team team = DataBase.getTeamById(id);
+    public ResponseEntity<Project> createProject(@RequestParam String name, @RequestParam String teamId) {
+        Team team = DataBase.getTeamById(teamId);
+
+        
         if (team == null) {
+            System.out.println("team not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        System.out.println("Team" + team.getName());
         Project project = Project.create(name, team);
         DataBase.addProject(project);
         return ResponseEntity.ok(project);

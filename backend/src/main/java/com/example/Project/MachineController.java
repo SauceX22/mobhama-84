@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class MachineController {
     @GetMapping()
     public ResponseEntity<ArrayList<Machine>> getMachines() {
-        return ResponseEntity.ok(DataBase.getMachines());
+        ArrayList<Machine> machines = DataBase.getMachines();
+        if (machines == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(machines);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Machine> getMachine(String id) {
-        return ResponseEntity.ok(DataBase.getMachineById(id));
+        Machine machine = DataBase.getMachineById(id);
+        if (machine == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(machine);
     }
     @GetMapping("/Reservations")
     public ResponseEntity<ArrayList<Reservation>> getMachineReservations(@RequestParam String machineId) {
@@ -36,17 +45,17 @@ public class MachineController {
         return ResponseEntity.ok(machine);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Machine> updateMachine(String id, String name) {
+    public ResponseEntity<Machine> updateMachine(@PathVariable String id, @RequestParam String name) {
         Machine machineUpdated = DataBase.updateMachineInfo(id, name);
         if (machineUpdated == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(machineUpdated);
     }
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteMachine(String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteMachine(@PathVariable String id) {
         boolean removed = DataBase.removeMachine(id);
-        if (removed) {
+        if (!removed) {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(true, HttpStatus.OK);

@@ -27,14 +27,22 @@ public class Reservation {
         this.id = id;
         this.machine = machine;
         this.team = team;
-        this.startTime = formatDate(startTime);
-        this.endTime = formatDate(endTime);
+        this.startTime = LocalDateTime.parse(startTime);
+        this.endTime = LocalDateTime.parse(endTime);
     }
     public static Reservation create(Machine machine, Team team, String startTime, String endTime){
-        LocalDateTime start = formatDate(startTime);
-        LocalDateTime end = formatDate(endTime);
-        if (start.isAfter(end) || start.equals(end)) throw new IllegalArgumentException("Start time must be before end time");
-        return new Reservation(UUID.randomUUID().toString(), machine, team, startTime, endTime);
+        // LocalDateTime start = formatDate(startTime);
+        // LocalDateTime end = formatDate(endTime);
+        try {
+            LocalDateTime start = LocalDateTime.parse(startTime);
+            LocalDateTime end = LocalDateTime.parse(endTime);
+            if (start.isAfter(end) || start.equals(end)) return null;
+            if (start.isBefore(LocalDateTime.now())) return null;
+            return new Reservation(UUID.randomUUID().toString(), machine, team, start, end);
+        }catch (Exception e) {
+            return null;
+        }
+
     }
     public void setMachine(Machine machine){
         this.machine = machine;
@@ -48,6 +56,7 @@ public class Reservation {
     public Team getTeam(){
         return team;
     }
+
     private static LocalDateTime formatDate(String dateTime){
         //date Format: yy-mm-ddThh:mm:ss
         String[] split = dateTime.split("T");
