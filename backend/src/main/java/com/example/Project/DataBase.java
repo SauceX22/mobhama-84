@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -196,6 +197,31 @@ public class DataBase {
         }
         return userProjects;
     }
+    public static Team getTeamThatDidTheMostReservations() {
+        HashMap<Team, Integer> teamsReservations = new HashMap<>();
+        for (Reservation reservation : reservations) {
+            Team team = reservation.getTeam();
+            if (teamsReservations.containsKey(team)) {
+                teamsReservations.put(team, teamsReservations.get(team) + 1);
+            }else {
+                teamsReservations.put(team, 1);
+            }
+        }
+        int max = 0;
+        Team mostReservingTeam = null;
+        for (Team team : teamsReservations.keySet()) {
+            if (teamsReservations.get(team) > max) {
+                max = teamsReservations.get(team);
+                mostReservingTeam = team;
+            }
+        }
+        return mostReservingTeam;
+    }
+        
+    
+        
+        
+    
 
     public static void saveUsers() {
         // write users infos back to file
@@ -288,6 +314,34 @@ public class DataBase {
     public static ArrayList<User> getUsers() {
         return users;
     }
+    public static Machine getMostUsedMachine() {
+        // to me in the future: this is a very inefficient way to do this
+        // I just did not have enought time to do this in a better way
+        // please
+        int max = 0;
+        Machine mostUsed = null;
+        for (Machine machine : machines) {
+            int count = 0;
+            for (Reservation reservation : reservations) {
+                if (reservation.getMachine().getId().equals(machine.getId())) {
+                    count++;
+                }
+            }
+            if (count > max) {
+                max = count;
+                mostUsed = machine;
+            }
+        }
+        return mostUsed;
+    }
+    public User getUserByName(String name) {
+        for (User user : users) {
+            if (user.getName().equals(name)) {
+                return user;
+            }
+        }
+        return null;
+    }
     public static void removeTeam(Team team) {
         teams.remove(team);
         saveTeams();
@@ -356,6 +410,13 @@ public class DataBase {
     }
     public static void removeMachine(Machine machine) {
         machines.remove(machine);
+        // remove all reservations associated with this machine
+        ArrayList<Reservation> machineReservations = getMachineReservations(machine.getId());
+        if (reservations != null) {
+            for (Reservation reservation : machineReservations) {
+                removeReservation(reservation);
+            }
+        }
         saveMachines();
     }
 

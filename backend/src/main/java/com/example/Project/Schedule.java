@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Schedule {
     
     ArrayList<Reservation> reservations;
-    Machine machine;
+    Team team;
     Schedule(){
         this.reservations = new ArrayList<Reservation>();
     }
@@ -16,6 +16,18 @@ public class Schedule {
         reservations.remove(reservation);
     }
     // ??????????????????????
+    public ArrayList<Reservation> getReservations() {
+        return reservations;
+    }
+    public void setTeam(Team team){
+        this.team = team;
+    }
+    public Team getTeam(){
+        return team;
+    }
+    public void setReservations(ArrayList<Reservation> reservations) {
+        this.reservations = reservations;
+    }
     public void printReport(){
         
         
