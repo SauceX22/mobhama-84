@@ -32,7 +32,7 @@ const TimeTable: React.FC = () => {
       const dayElement = (
         <div key={dayIndex} className="relative col-span-2">
           {/* Header for the day */}
-          <div className="bg-light dark:bg-midnight sticky top-0 z-20 flex h-7 select-none items-center justify-center border-b border-gray-500/10 text-xs dark:border-gray-400/10">
+          <div className="sticky top-0 z-20 flex h-7 select-none items-center justify-center border-b border-gray-500/10 bg-background text-xs dark:border-gray-400/10">
             {day}
           </div>
           {/* Container for the content */}
@@ -64,13 +64,13 @@ const TimeTable: React.FC = () => {
       for (let j = 0; j < columns; j++) {
         // Determine the style class based on column index
         const styleClass =
-          j % 2 === 0 ? "dark:border-gray-400" : "dark:border-gray-600";
+          j % 2 === 0 ? "dark:border-primary" : "dark:border-secondary";
 
         // Generate the column element
         colElements.push(
           <div
             key={j}
-            className={`col-span-1 box-border h-8 min-w-[6rem] border-t border-gray-500 text-center ${styleClass}`}
+            className={`col-span-1 box-border h-8 min-w-[6rem] border-t text-center ${styleClass}`}
           >
             {/* Display events in the cell */}
             {generateEventsForCell(i, j)}
@@ -151,7 +151,7 @@ const TimeTable: React.FC = () => {
 
   return (
     <div
-      className="m-auto flex w-full flex-col rounded-lg border border-foreground bg-transparent p-6 outline-none"
+      className="m-auto flex w-full flex-col rounded-lg border bg-transparent p-6 outline-none"
       role="tabpanel"
       tabIndex={0}
     >
