@@ -27,6 +27,15 @@ public class ReservationControl {
         }
         return ResponseEntity.ok(reservation);
     }
+    // the user that did the most reservations
+    @GetMapping("/mostactiveUser")
+    public ResponseEntity<User> getMostActiveUser() {
+        User user = DataBase.getMostActiveUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(user);
+    }
     @PostMapping()
     public ResponseEntity<Reservation> createReservation(@RequestParam String userId, @RequestParam String machineId,@RequestParam String teamId, @RequestParam String startTime, @RequestParam String endTime) {
         User user = DataBase.getUserInfo(userId);
@@ -92,7 +101,7 @@ public class ReservationControl {
         return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Reservation> deleteReservation(@PathVariable String id, @RequestParam String userId) {
+    public ResponseEntity<Boolean> deleteReservation(@PathVariable String id, @RequestParam String userId) {
         User user = DataBase.getUserInfo(userId);
         Reservation reservation = DataBase.getReservationById(id);
         if (user == null || reservation == null) {
@@ -104,7 +113,7 @@ public class ReservationControl {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         DataBase.removeReservation(reservation);
-        return ResponseEntity.ok(reservation);
+        return ResponseEntity.ok(true);
     }
 }
 

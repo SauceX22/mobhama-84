@@ -1,6 +1,7 @@
 package com.example.Project;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,29 @@ public class TeamController {
         return ResponseEntity.ok(reservations);
     }
     
-
+    @GetMapping("/{id}/schedule")
+    public ResponseEntity<Schedule> getTeamSchedule(@RequestParam String teamId) {
+        Team team = DataBase.getTeamById(teamId);
+        if (team == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Schedule schedule = new Schedule();
+        ArrayList<Reservation> reservations = DataBase.getTeamReservations(teamId);
+        if (reservations == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        schedule.setReservations(reservations);
+        schedule.setTeam(team);
+        return ResponseEntity.ok(schedule);
+    }
+    @GetMapping("/MostActiveTeam") 
+    public ResponseEntity<Team> getMostActiveTeam() {
+        Team team = DataBase.getTeamThatDidTheMostReservations();
+        if (team == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(team);
+    }
     @PostMapping()
     public ResponseEntity<Team> createTeam(@RequestParam String name, @RequestParam List<String> usersIds) {
         Team team = Team.create(name);
@@ -80,6 +103,7 @@ public class TeamController {
         DataBase.saveTeams();
         return ResponseEntity.ok(team);
     }
+
     
 
 

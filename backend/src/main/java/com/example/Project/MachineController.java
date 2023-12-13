@@ -37,6 +37,14 @@ public class MachineController {
         ArrayList<Reservation> reservations = DataBase.getMachineReservations(machineId);
         return ResponseEntity.ok(reservations);
     }
+    @GetMapping("/mostUsed")
+    public ResponseEntity<Machine> getMostUsedMachine() {
+        Machine machine = DataBase.getMostUsedMachine();
+        if (machine == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(machine);
+    }
     
     @PostMapping()
     public ResponseEntity<Machine> createMachine(String name) {
@@ -60,5 +68,6 @@ public class MachineController {
         }
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
+
     
 }

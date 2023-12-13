@@ -39,7 +39,7 @@ public class ProjectController {
         }
         return ResponseEntity.ok(project);
     }
-
+    
     @PutMapping("/{id}")
     public ResponseEntity<Project> assignTeamToProject(@PathVariable String id, @RequestParam String teamId) {
         Project project = DataBase.getProjectById(id);

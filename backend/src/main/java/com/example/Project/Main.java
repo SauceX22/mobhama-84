@@ -1,9 +1,5 @@
 package com.example.Project;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +10,18 @@ public class Main {
 
 
     @RequestMapping("/login")
-    public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
-       String id = DataBase.login(username, password);
-       if (id != null) {
-           User userInfo = DataBase.getUserInfo(id);
-           return ResponseEntity.ok(userInfo);
-        }else {
-           return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<User> login(@RequestParam String username) {
+       User user = DataBase.getUserInfo(username);
+         if (user == null) {
+              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         }
+         if (user.getRole().equals(User.Role.ADMIN)) {
+             Admin admin = (Admin) user;
+             return ResponseEntity.ok(admin);
+         } else {
+             TeamMember teamMember = (TeamMember) user;
+             return ResponseEntity.ok(teamMember);
+         }
     }
     //@RequestMapping("/Project")
     //@GetMapping
@@ -183,42 +183,42 @@ public class Main {
     //     ArrayList<Reservation> reservations = DataBase.getTeamReservations(teamId);
     //     return ResponseEntity.ok(reservations);
     // }
-    @RequestMapping("/reserveMachine")
-    public ResponseEntity<Reservation> reserveMachine(@RequestParam String machineId, @RequestParam String teamId, @RequestParam String startTime, @RequestParam String endTime) {
-        Machine machine = DataBase.getMachineById(machineId);
-        if (machine == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Team team = DataBase.getTeamById(teamId);
-        if (team == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        try {
-            Reservation reservation = Reservation.create(machine, team, startTime, endTime);    
-            DataBase.addReservation(reservation);
-            return ResponseEntity.ok(reservation);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
-    }
-    @RequestMapping("/cancelReservation")
-    public ResponseEntity<Reservation> cancelReservation(@RequestParam String reservationId) {
-        Reservation reservation = DataBase.getReservationById(reservationId);
-        if (reservation == null) {
-            // return NotFound  and a special message
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        DataBase.removeReservation(reservation);
-        return ResponseEntity.ok(reservation);
-    }
-    @RequestMapping("/getReservation")
-    public ResponseEntity<Reservation> getReservation(@RequestParam String reservationId) {
-        Reservation reservation = DataBase.getReservationById(reservationId);
-        if (reservation == null) {
-            // return NotFound  and a special message
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(reservation);
-    }
+    // @RequestMapping("/reserveMachine")
+    // public ResponseEntity<Reservation> reserveMachine(@RequestParam String machineId, @RequestParam String teamId, @RequestParam String startTime, @RequestParam String endTime) {
+    //     Machine machine = DataBase.getMachineById(machineId);
+    //     if (machine == null) {
+    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //     }
+    //     Team team = DataBase.getTeamById(teamId);
+    //     if (team == null) {
+    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //     }
+    //     try {
+    //         Reservation reservation = Reservation.create(machine, team, startTime, endTime);    
+    //         DataBase.addReservation(reservation);
+    //         return ResponseEntity.ok(reservation);
+    //     } catch (Exception e) {
+    //         return new ResponseEntity<>(HttpStatus.CONFLICT);
+    //     }
+    // }
+    // @RequestMapping("/cancelReservation")
+    // public ResponseEntity<Reservation> cancelReservation(@RequestParam String reservationId) {
+    //     Reservation reservation = DataBase.getReservationById(reservationId);
+    //     if (reservation == null) {
+    //         // return NotFound  and a special message
+    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //     }
+    //     DataBase.removeReservation(reservation);
+    //     return ResponseEntity.ok(reservation);
+    // }
+    // @RequestMapping("/getReservation")
+    // public ResponseEntity<Reservation> getReservation(@RequestParam String reservationId) {
+    //     Reservation reservation = DataBase.getReservationById(reservationId);
+    //     if (reservation == null) {
+    //         // return NotFound  and a special message
+    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //     }
+    //     return ResponseEntity.ok(reservation);
+    // }
 
 }
