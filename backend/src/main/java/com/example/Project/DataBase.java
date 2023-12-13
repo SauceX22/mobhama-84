@@ -419,7 +419,27 @@ public class DataBase {
         }
         saveMachines();
     }
-
+    //getMostActiveUser
+    public static User getMostActiveUser() {
+        HashMap<User, Integer> usersReservations = new HashMap<>();
+        for (Reservation reservation : reservations) {
+            User user = reservation.getBookedBy();
+            if (usersReservations.containsKey(user)) {
+                usersReservations.put(user, usersReservations.get(user) + 1);
+            }else {
+                usersReservations.put(user, 1);
+            }
+        }
+        int max = 0;
+        User mostActiveUser = null;
+        for (User user : usersReservations.keySet()) {
+            if (usersReservations.get(user) > max) {
+                max = usersReservations.get(user);
+                mostActiveUser = user;
+            }
+        }
+        return mostActiveUser;
+    }
     // reservations
     public static void loadReservations() {
         // header = reservationId,machineId,teamId,startTime,endTime,bookedById,bookedOn
