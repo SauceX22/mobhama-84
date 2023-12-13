@@ -1,4 +1,5 @@
 import { type Icons } from "@/components/icons";
+import { User } from "next-auth";
 
 export type NavItem = {
   title: string;

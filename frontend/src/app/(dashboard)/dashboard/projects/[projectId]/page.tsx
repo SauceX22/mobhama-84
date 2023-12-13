@@ -26,8 +26,6 @@ type Props = {
   params: { projectId: string };
 };
 
-const reservations: Reservation[] = [];
-
 const ProjectDetailsPage = ({ params, ...props }: Props) => {
   const router = useRouter();
 
@@ -79,7 +77,12 @@ const ProjectDetailsPage = ({ params, ...props }: Props) => {
                     // src={reservation.avatarSrc}
                     />
                     <AvatarFallback>
-                      {reservation.bookedBy.avatarFallback}
+                      {/* create the fallback by taking the first and last words of the name and taking the first letter */}
+                      {reservation.bookedBy.name
+                        ?.split(" ")
+                        .slice(0, 2)
+                        .map((word) => word[0])
+                        .join("")}
                     </AvatarFallback>
                   </Avatar>
                   <div className="space-y-1">
