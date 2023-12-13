@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TRPCReactProvider } from "@/trpc/react";
 import { cookies } from "next/headers";
 import NextAuthProvider from "@/server/auth/provider";
@@ -100,7 +99,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <Toaster />
               <TailwindIndicator />
             </ThemeProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
           </TRPCReactProvider>
         </NextAuthProvider>
       </body>
