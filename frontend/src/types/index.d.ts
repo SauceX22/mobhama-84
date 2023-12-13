@@ -12,6 +12,7 @@ export type SidebarNavItem = {
   title: string;
   disabled?: boolean;
   external?: boolean;
+  adminOnly?: false;
   icon?: keyof typeof Icons;
 } & (
   | {
@@ -46,27 +47,6 @@ export type DashboardConfig = {
 };
 
 // data types
-
-export enum UserRole {
-  ADMIN = "admin",
-  MEMBER = "member",
-}
-
-export enum UserStatus {
-  ACTIVE = "active",
-  SUSPENDED = "suspended",
-}
-
-export interface User {
-  id: string;
-  name: string;
-  phoneNum: string;
-  email: string;
-  role: UserRole;
-  status: UserStatus;
-  avatar: string;
-  avatarFallback: string;
-}
 
 export interface Machine {
   id: string;
