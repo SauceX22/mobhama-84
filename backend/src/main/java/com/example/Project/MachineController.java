@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/Machine")
+@RequestMapping("/machine")
 public class MachineController {
     @GetMapping()
     public ResponseEntity<ArrayList<Machine>> getMachines() {

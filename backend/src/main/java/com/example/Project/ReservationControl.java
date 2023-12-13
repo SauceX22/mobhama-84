@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/Reservation")
+@RequestMapping("/reservation")
 public class ReservationControl {
     @GetMapping
     public ResponseEntity<ArrayList<Reservation>> getReservations() {

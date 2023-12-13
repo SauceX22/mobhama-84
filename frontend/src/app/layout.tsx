@@ -10,8 +10,9 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import ReactQueryProvider from "@/lib/react-query-provider";
+import { TRPCReactProvider } from "@/trpc/react";
+import { cookies } from "next/headers";
+import NextAuthProvider from "@/server/auth/provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -91,14 +92,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontHeading.variable,
         )}
       >
-        <ReactQueryProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-            <Toaster />
-            <TailwindIndicator />
-          </ThemeProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </ReactQueryProvider>
+        <NextAuthProvider>
+          <TRPCReactProvider cookies={cookies().toString()}>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+              <Toaster />
+              <TailwindIndicator />
+            </ThemeProvider>
+          </TRPCReactProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

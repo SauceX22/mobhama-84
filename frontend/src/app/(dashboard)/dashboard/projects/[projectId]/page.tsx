@@ -14,44 +14,24 @@ import {
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
-import { type Reservation } from "@/server/api";
+import { type Reservation } from "@/types";
 import { format } from "date-fns";
-import { useQuery } from "@tanstack/react-query";
 import { env } from "@/env.mjs";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import TimeTable from "@/components/timetable";
+import { api } from "@/trpc/react";
 
 type Props = {
   params: { projectId: string };
 };
 
-const reservations: Reservation[] = [];
-
 const ProjectDetailsPage = ({ params, ...props }: Props) => {
   const router = useRouter();
 
-  // const { data: reservations } = useQuery<Reservation[]>({
-  //   queryKey: ["reservations", params.projectId],
-  //   suspense: true,
-  //   queryFn: async () =>
-  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  //     await fetch(`$localhost:8080?projectId=${params.projectId}`).then(
-  //       (res) => res.json(),
-  //     ),
-  //   onError(error) {
-  //     toast({
-  //       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  //       title:
-  //         "Error: " +
-  //         (error instanceof Error
-  //           ? error.message
-  //           : "fetch reservations failed"),
-  //       description: "Failed to fetch reservations.",
-  //       variant: "destructive",
-  //     });
-  //   },
-  // });
+  const { data: reservations } = api.reservation.getReservations.useQuery({
+    projectId: params.projectId,
+  });
 
   return (
     <DashboardShell>
@@ -97,7 +77,12 @@ const ProjectDetailsPage = ({ params, ...props }: Props) => {
                     // src={reservation.avatarSrc}
                     />
                     <AvatarFallback>
-                      {reservation.bookedBy.avatarFallback}
+                      {/* create the fallback by taking the first and last words of the name and taking the first letter */}
+                      {reservation.bookedBy.name
+                        ?.split(" ")
+                        .slice(0, 2)
+                        .map((word) => word[0])
+                        .join("")}
                     </AvatarFallback>
                   </Avatar>
                   <div className="space-y-1">

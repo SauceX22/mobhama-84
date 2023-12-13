@@ -1,5 +1,3 @@
-"use client";
-
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,70 +11,14 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import React from "react";
-import { useQuery } from "react-query";
-import { toast } from "@/components/ui/use-toast";
-import ReactQueryProvider from "@/lib/react-query-provider";
-
-type Member = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-};
+import { api } from "@/trpc/server";
 
 type Props = {
   //
 };
 
-const UsersManagementPage = (props: Props) => {
-  //   const { data: members } = useQuery<Member[]>({
-  //     queryKey: ["members"],
-  //     suspense: true,
-  //     queryFn: async () =>
-  //       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  //       await fetch(`$localhost:8080/members`).then((res) => res.json()),
-  //     onError(error) {
-  //       toast({
-  //         title:
-  //           "Error: " +
-  //           (error instanceof Error ? error.message : "fetch members failed"),
-  //         description: "Failed to fetch members.",
-  //         variant: "destructive",
-  //       });
-  //     },
-  //   });
-
-  const members = [
-    {
-      id: "1",
-      name: "User 1",
-      email: "",
-      role: "Admin",
-      status: "Active",
-    },
-    {
-      id: "2",
-      name: "User 2",
-      email: "",
-      role: "Admin",
-      status: "Active",
-    },
-    {
-      id: "3",
-      name: "User 3",
-      email: "",
-      role: "Admin",
-      status: "Active",
-    },
-    {
-      id: "4",
-      name: "User 4",
-      email: "",
-      role: "Admin",
-      status: "Active",
-    },
-  ];
+const UsersManagementPage = async (props: Props) => {
+  const users = await api.user.getUsers.query();
 
   return (
     <DashboardShell>
@@ -104,26 +46,26 @@ const UsersManagementPage = (props: Props) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {members?.map((member) => (
-                <TableRow key={member.id}>
+              {users?.map((user) => (
+                <TableRow key={user.id}>
                   <TableCell>
                     <Avatar className="h-9 w-9">
                       <AvatarImage
-                        alt={`${member.name}'s avatar`}
+                        alt={`${user.name}'s avatar`}
                         src="/placeholder-avatar.jpg"
                       />
-                      <AvatarFallback>{member.name[0]}</AvatarFallback>
+                      <AvatarFallback>{user.name}</AvatarFallback>
                     </Avatar>
                   </TableCell>
-                  <TableCell className="font-medium">{member.name}</TableCell>
+                  <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {member.email}
+                    {user.email}
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {member.role}
+                    {user.role}
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {member.status}
+                    {user.status}
                   </TableCell>
                   <TableCell>
                     <Button size="sm" variant="outline">
