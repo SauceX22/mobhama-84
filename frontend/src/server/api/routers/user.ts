@@ -5,7 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
-import { User } from "next-auth";
+import { type User } from "next-auth";
 
 export const userRouter = createTRPCRouter({
   getUsers: protectedProcedure.query(async () => {

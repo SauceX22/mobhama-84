@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { type NextAuthOptions } from "next-auth";
+import { User, type NextAuthOptions } from "next-auth";
 import { db } from "@/lib/db";
 import GitHubProvider from "next-auth/providers/github";
 import { env } from "@/env.mjs";
@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
         });
-        const user = await res.json();
+        const user = (await res.json()) as User | null;
 
         // If no error and we have user data, return it
         if (res.ok && user) {
