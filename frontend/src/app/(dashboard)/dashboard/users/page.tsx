@@ -13,17 +13,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import React from "react";
-import { toast } from "@/components/ui/use-toast";
-import ReactQueryProvider from "@/lib/react-query-provider";
 import { api } from "@/trpc/react";
-
-type Member = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-};
 
 type Props = {
   //
