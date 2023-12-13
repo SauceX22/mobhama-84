@@ -30,38 +30,7 @@ type Props = {
 };
 
 const UsersManagementPage = (props: Props) => {
-  const { data: users } = api.user.getUsers.useQuery();
-
-  const members = [
-    {
-      id: "1",
-      name: "User 1",
-      email: "",
-      role: "Admin",
-      status: "Active",
-    },
-    {
-      id: "2",
-      name: "User 2",
-      email: "",
-      role: "Admin",
-      status: "Active",
-    },
-    {
-      id: "3",
-      name: "User 3",
-      email: "",
-      role: "Admin",
-      status: "Active",
-    },
-    {
-      id: "4",
-      name: "User 4",
-      email: "",
-      role: "Admin",
-      status: "Active",
-    },
-  ];
+  const { data: members } = api.user.getUsers.useQuery();
 
   return (
     <DashboardShell>
