@@ -13,10 +13,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useQuery } from "@tanstack/react-query";
-import { env } from "@/env.mjs";
 import { toast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
+import { api } from "@/trpc/react";
 
 type Props = {
   params: { projectId: string };
@@ -47,35 +46,8 @@ const project = {
 };
 
 const ProjectSettingsPage = ({ params, ...props }: Props) => {
-  const { data: teams } = useQuery<
-    {
-      id: string;
-      name: string;
-    }[]
-  >({
-    queryKey: ["teams", params.projectId],
-    suspense: true,
-    queryFn: async () =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      await fetch(`$localhost:8080?projectId=${params.projectId}`).then((res) =>
-        res.json(),
-      ),
-    select(data) {
-      return data.map((team) => ({
-        id: team.id,
-        name: team.name,
-      }));
-    },
-    onError(error) {
-      toast({
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        title:
-          "Error: " +
-          (error instanceof Error ? error.message : "fetch teams failed"),
-        description: "Failed to fetch teams.",
-        variant: "destructive",
-      });
-    },
+  const { data: teams } = api.team.getTeams.useQuery(undefined, {
+    select: (data) => data?.map((team) => ({ id: team.id, name: team.name })),
   });
 
   const [selectedTeam, setSelectedTeam] = useState(project.teamId);

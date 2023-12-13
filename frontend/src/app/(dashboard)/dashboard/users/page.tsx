@@ -13,9 +13,9 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import React from "react";
-import { useQuery } from "react-query";
 import { toast } from "@/components/ui/use-toast";
 import ReactQueryProvider from "@/lib/react-query-provider";
+import { api } from "@/trpc/react";
 
 type Member = {
   id: string;
@@ -30,22 +30,7 @@ type Props = {
 };
 
 const UsersManagementPage = (props: Props) => {
-  //   const { data: members } = useQuery<Member[]>({
-  //     queryKey: ["members"],
-  //     suspense: true,
-  //     queryFn: async () =>
-  //       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  //       await fetch(`$localhost:8080/members`).then((res) => res.json()),
-  //     onError(error) {
-  //       toast({
-  //         title:
-  //           "Error: " +
-  //           (error instanceof Error ? error.message : "fetch members failed"),
-  //         description: "Failed to fetch members.",
-  //         variant: "destructive",
-  //       });
-  //     },
-  //   });
+  const { data: users } = api.user.getUsers.useQuery();
 
   const members = [
     {

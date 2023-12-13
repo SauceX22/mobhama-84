@@ -3,6 +3,7 @@ import { projectRouter } from "@/server/api/routers/project";
 import { reservationRouter } from "@/server/api/routers/reservation";
 import { teamRouter } from "@/server/api/routers/team";
 import { scheduleRouter } from "@/server/api/routers/schedule";
+import { userRouter } from "@/server/api/routers/user";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 /**
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   reservation: reservationRouter,
   team: teamRouter,
   schedule: scheduleRouter,
+  user: userRouter,
 });
 
 // export type definition of API

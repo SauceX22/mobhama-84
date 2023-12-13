@@ -8,75 +8,31 @@ import {
 import { Reservation } from "@/types";
 
 export const reservationRouter = createTRPCRouter({
-  createReservation: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ input }) => {
-      const response = await fetch("/api/reservations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(input),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create reservation");
-      }
-
-      return response.json() as unknown as Reservation;
-    }),
-
-  updateReservation: protectedProcedure
-    .input(z.object({ id: z.string(), name: z.string().min(1) }))
-    .mutation(async ({ input }) => {
+  getReservation: protectedProcedure
+    .input(z.object({ id: z.string().min(1) }))
+    .query(async ({ input }) => {
       const response = await fetch(`/api/reservations/${input.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: input.name }),
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update reservation");
+        throw new Error("Failed to fetch reservation");
       }
 
       return response.json() as unknown as Reservation;
     }),
 
-  deleteReservation: protectedProcedure
-    .input(z.string())
-    .mutation(async ({ input }) => {
-      const response = await fetch(`/api/reservations/${input}`, {
-        method: "DELETE",
+  getReservations: protectedProcedure
+    .input(z.object({ projectId: z.string().min(1) }))
+    .query(async () => {
+      const response = await fetch("/api/reservations", {
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete reservation");
+        throw new Error("Failed to fetch reservations");
       }
+
+      return response.json() as unknown as Reservation[];
     }),
-
-  getReservation: protectedProcedure.query(async ({ input }) => {
-    const response = await fetch(`/api/reservations/${input}`, {
-      method: "GET",
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch reservation");
-    }
-
-    return response.json() as unknown as Reservation;
-  }),
-
-  getReservations: protectedProcedure.query(async () => {
-    const response = await fetch("/api/reservations", {
-      method: "GET",
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch reservations");
-    }
-
-    return response.json() as unknown as Reservation[];
-  }),
 });
