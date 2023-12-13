@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import React from "react";
-import { type Project } from "@/server/api";
+import { type Project } from "@/types";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 

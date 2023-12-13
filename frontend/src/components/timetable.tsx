@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { cn, getReservationHourRow } from "@/lib/utils";
 import TableItem from "@/components/table-item";
-import { type Reservation, ReservationStatus } from "@/server/api";
+import { type Reservation, ReservationStatus } from "@/types";
 import { getDay, parse, set } from "date-fns";
 
 const days = ["SUN", "MON", "TUE", "WED", "THU"];

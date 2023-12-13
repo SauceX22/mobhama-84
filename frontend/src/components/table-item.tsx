@@ -1,6 +1,6 @@
 import React from "react";
 import { Icons } from "./icons";
-import { type Reservation } from "@/server/api";
+import { type Reservation } from "@/types";
 import { parse, set } from "date-fns";
 import { cn } from "@/lib/utils";
 

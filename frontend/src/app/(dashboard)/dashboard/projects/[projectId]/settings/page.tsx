@@ -47,36 +47,36 @@ const project = {
 };
 
 const ProjectSettingsPage = ({ params, ...props }: Props) => {
-  // const { data: teams } = useQuery<
-  //   {
-  //     id: string;
-  //     name: string;
-  //   }[]
-  // >({
-  //   queryKey: ["teams", params.projectId],
-  //   suspense: true,
-  //   queryFn: async () =>
-  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  //     await fetch(`$localhost:8080?projectId=${params.projectId}`).then((res) =>
-  //       res.json(),
-  //     ),
-  //   select(data) {
-  //     return data.map((team) => ({
-  //       id: team.id,
-  //       name: team.name,
-  //     }));
-  //   },
-  //   onError(error) {
-  //     toast({
-  //       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  //       title:
-  //         "Error: " +
-  //         (error instanceof Error ? error.message : "fetch teams failed"),
-  //       description: "Failed to fetch teams.",
-  //       variant: "destructive",
-  //     });
-  //   },
-  // });
+  const { data: teams } = useQuery<
+    {
+      id: string;
+      name: string;
+    }[]
+  >({
+    queryKey: ["teams", params.projectId],
+    suspense: true,
+    queryFn: async () =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      await fetch(`$localhost:8080?projectId=${params.projectId}`).then((res) =>
+        res.json(),
+      ),
+    select(data) {
+      return data.map((team) => ({
+        id: team.id,
+        name: team.name,
+      }));
+    },
+    onError(error) {
+      toast({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        title:
+          "Error: " +
+          (error instanceof Error ? error.message : "fetch teams failed"),
+        description: "Failed to fetch teams.",
+        variant: "destructive",
+      });
+    },
+  });
 
   const [selectedTeam, setSelectedTeam] = useState(project.teamId);
 
