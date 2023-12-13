@@ -1,0 +1,89 @@
+/login GET
+parameters:{username:String, password:String} 
+return:User class
+example
+{
+    "name": "Mo",
+    "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+    "email": "12781271@dsf.com",
+    "avatar": "imaeg.com/12",
+    "researchInterest": "AI no",
+    "phoneNum": "05363121"
+}
+
+// all /User endpoints
+/User
+GET:
+// get all users
+example:
+[
+    {
+        "name": "Mo",
+        "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+        "email": "12781271@dsf.com",
+        "avatar": "imaeg.com/12",
+        "role": "TEAM_MEMBER",
+        "researchInterest": "AI no",
+        "phoneNum": "05363121"
+    },
+    {
+        "name": "Hamoud",
+        "id": "bbf39e55-4500-4729-b502-1c755c0150ba",
+        "email": "kfupm@dsf.com",
+        "avatar": "imaeg.com/12",
+        "role": "TEAM_MEMBER",
+        "researchInterest": "AI no",
+        "phoneNum": "0531256235"
+    }
+]
+
+GET: /User/{id}
+{
+    "name": "Mo",
+    "id": "224c4484-6899-4ad0-92f3-fb6965cdc3b1",
+    "email": "12781271@dsf.com",
+    "avatar": "imaeg.com/12",
+    "role": "TEAM_MEMBER",
+    "researchInterest": "AI no",
+    "phoneNum": "05363121"
+}
+
+// return team of a user
+Get:
+/User/teams
+parameters: {id:String}
+////////////////////////////////////////////
+
+POST: /User
+parameters example:
+	name:Yahia Saleh
+	phoneNum:053128941
+	email:kfupm222@dsf.com
+	type:ADMIN
+	researchInterest:UI
+	avatar:imaeg.com/1212
+
+return:
+{
+    "name": "Yahia Saleh",
+    "id": "1d9b9fcb-bbd8-4a89-858a-854eb4a9079f",
+    "email": "kfupm222@dsf.com",
+    "avatar": "imaeg.com/1212",
+    "role": "TEAM_MEMBER",
+    "researchInterest": "UI",
+    "phoneNum": "053128941"
+}
+
+/////////////
+
+//Team
+
+// get all teams
+GET: /Team
+
+return:
+
+/POST: /Team
+parameters: name:TeamName  usersId:id1,id2   //list
+	
+

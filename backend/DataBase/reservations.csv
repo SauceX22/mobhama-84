@@ -1,0 +1,2 @@
+reservationId,machineId,teamId,startTime,endTime,bookedById,bookedOn
+123,11,14393e35-fd0b-4158-9cc6-87a7359d3b45,2003-12-17T5:20,2005-11-13T6:12,86547a00-4bbc-4612-b6ef-7119b57b42cf,2001-1-1T6:12
