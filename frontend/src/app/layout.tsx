@@ -13,6 +13,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TRPCReactProvider } from "@/trpc/react";
 import { cookies } from "next/headers";
+import NextAuthProvider from "@/server/auth/provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -92,14 +93,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontHeading.variable,
         )}
       >
-        <TRPCReactProvider cookies={cookies().toString()}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-            <Toaster />
-            <TailwindIndicator />
-          </ThemeProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </TRPCReactProvider>
+        <NextAuthProvider>
+          <TRPCReactProvider cookies={cookies().toString()}>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+              <Toaster />
+              <TailwindIndicator />
+            </ThemeProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </TRPCReactProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
