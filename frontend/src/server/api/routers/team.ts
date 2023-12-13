@@ -9,7 +9,7 @@ import { Team } from "@/types";
 
 export const teamRouter = createTRPCRouter({
   getTeams: protectedProcedure.query(async () => {
-    const response = await fetch("/api/teams", {
+    const response = await fetch("localhost:8080/api/teams", {
       method: "GET",
     });
 

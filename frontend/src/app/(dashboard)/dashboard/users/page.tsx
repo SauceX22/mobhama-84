@@ -1,5 +1,3 @@
-"use client";
-
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,14 +11,14 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import React from "react";
-import { api } from "@/trpc/react";
+import { api } from "@/trpc/server";
 
 type Props = {
   //
 };
 
-const UsersManagementPage = (props: Props) => {
-  const { data: members } = api.user.getUsers.useQuery();
+const UsersManagementPage = async (props: Props) => {
+  const users = await api.user.getUsers.query();
 
   return (
     <DashboardShell>
@@ -48,26 +46,26 @@ const UsersManagementPage = (props: Props) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {members?.map((member) => (
-                <TableRow key={member.id}>
+              {users?.map((user) => (
+                <TableRow key={user.id}>
                   <TableCell>
                     <Avatar className="h-9 w-9">
                       <AvatarImage
-                        alt={`${member.name}'s avatar`}
+                        alt={`${user.name}'s avatar`}
                         src="/placeholder-avatar.jpg"
                       />
-                      <AvatarFallback>{member.name[0]}</AvatarFallback>
+                      <AvatarFallback>{user.name}</AvatarFallback>
                     </Avatar>
                   </TableCell>
-                  <TableCell className="font-medium">{member.name}</TableCell>
+                  <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {member.email}
+                    {user.email}
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {member.role}
+                    {user.role}
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {member.status}
+                    {user.status}
                   </TableCell>
                   <TableCell>
                     <Button size="sm" variant="outline">

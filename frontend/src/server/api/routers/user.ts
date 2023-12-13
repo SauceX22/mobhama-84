@@ -9,7 +9,7 @@ import { User } from "next-auth";
 
 export const userRouter = createTRPCRouter({
   getUsers: protectedProcedure.query(async () => {
-    const response = await fetch("/api/users", {
+    const response = await fetch("localhost:8080/api/users", {
       method: "GET",
     });
 

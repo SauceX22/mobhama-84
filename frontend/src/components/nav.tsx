@@ -6,6 +6,7 @@ import { SidebarNavItem } from "@/types";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
+import { useSession } from "next-auth/react";
 
 interface DashboardNavProps {
   items: SidebarNavItem[];
@@ -13,6 +14,7 @@ interface DashboardNavProps {
 
 export function DashboardNav({ items }: DashboardNavProps) {
   const path = usePathname();
+  const { data: session } = useSession();
 
   if (!items?.length) {
     return null;
@@ -21,6 +23,10 @@ export function DashboardNav({ items }: DashboardNavProps) {
   return (
     <nav className="grid items-start gap-2">
       {items.map((item, index) => {
+        // if item.adminOnly is true, and the user is not an admin, don't show the item
+        if (item.adminOnly && session?.user.role !== "admin") {
+          return null;
+        }
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const Icon = Icons[item.icon ?? "arrowRight"];
         return (
