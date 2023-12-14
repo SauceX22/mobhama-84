@@ -1,7 +1,7 @@
 package com.example.Project;
 
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +72,24 @@ public class TeamController {
         Team team = Team.create(name);
         for (String id : usersIds) {
             User user = DataBase.getUserInfo(id);
+            if (user != null) {
+                team.addMember(user);
+            }
+        }
+        DataBase.addTeam(team);
+        return ResponseEntity.ok(team);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Team> updateTeam(@PathVariable String id, @RequestParam String name, ArrayList<String> usersIds) {
+        Team team = DataBase.getTeamById(id);
+        if (team == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        DataBase.removeTeam(team);
+        team.setName(name);
+        for (String userId : usersIds) {
+            User user = DataBase.getUserInfo(userId);
             if (user != null) {
                 team.addMember(user);
             }

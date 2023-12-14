@@ -1,5 +1,5 @@
 /login GET
-parameters:{username:String, password:String} 
+parameters:{username:String} 
 return:User class
 example
 {
@@ -105,6 +105,9 @@ return:
 /DELETE: User/{id}
 return: true or 404
 
+PUT: User/{id}
+parameters{name , phoneNum, email, researchInterest, avatar}
+return User Object
 
 
 /////////////
@@ -181,7 +184,7 @@ return:
     "teamId": "ee690892-0cb2-4865-8438-4a6b493a71ef"
 }
 
-
+PUT: 
 
 // Projects
 

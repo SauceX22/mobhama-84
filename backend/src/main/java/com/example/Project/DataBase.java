@@ -334,7 +334,7 @@ public class DataBase {
         }
         return mostUsed;
     }
-    public User getUserByName(String name) {
+    public static User getUserByName(String name) {
         for (User user : users) {
             if (user.getName().equals(name)) {
                 return user;
