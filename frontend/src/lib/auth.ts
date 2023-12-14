@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import GitHubProvider from "next-auth/providers/github";
 import { env } from "@/env.mjs";
 import CredentialsProvider from "next-auth/providers/credentials";
+import axios from "axios";
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
  *
@@ -26,8 +27,7 @@ export const authOptions: NextAuthOptions = {
       // You can specify whatever fields you are expecting to be submitted.
       // e.g. domain, username, password, 2FA token, etc.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "mahmoud" },
-        password: { label: "Password", type: "password" },
+        username: { label: "Username", type: "text", placeholder: "username" },
       },
       async authorize(credentials, req) {
         // You need to provide your own logic here that takes the credentials
@@ -36,19 +36,30 @@ export const authOptions: NextAuthOptions = {
         // e.g. return { id: 1, name: 'J Smith', email: 'mahmoud@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        const res = await fetch("localhost:8080/login", {
-          method: "POST",
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" },
-        });
-        const user = (await res.json()) as User | null;
 
-        // If no error and we have user data, return it
-        if (res.ok && user) {
-          return user;
+        try {
+          const response = await axios.get("http://localhost:8080/login", {
+            params: {
+              username: "Hamoud",
+            },
+            maxBodyLength: Infinity,
+            // Add other necessary fields if needed
+          });
+
+          // Check if the response is successful and return user data
+          if (response.status === 200) {
+            console.log(response.data);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            const user = response.data;
+            return Promise.resolve(user);
+          } else {
+            return Promise.resolve(null);
+          }
+        } catch (error) {
+          // Handle errors and return null
+          console.error("Error during login:", error);
+          return Promise.resolve(null);
         }
-        // Return null if user data could not be retrieved
-        return null;
       },
     }),
   ],

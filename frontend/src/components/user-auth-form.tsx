@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
+import axios from "axios";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -58,6 +59,39 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          try {
+            const response = await axios.get("http://localhost:8080/login", {
+              params: {
+                username: "Hamoud",
+              },
+              headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers":
+                  "Origin, X-Requested-With, Content-Type, Accept, Host, Authorization, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin",
+                
+              },
+              // Add other necessary fields if needed
+            });
+
+            // Check if the response is successful and return user data
+            if (response.status === 200) {
+              console.log(response.data);
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              const user = response.data;
+              return Promise.resolve(user);
+            } else {
+              return Promise.resolve(null);
+            }
+          } catch (error) {
+            // Handle errors and return null
+            console.error("Error during login:", error);
+            return Promise.resolve(null);
+          }
+        }}
+      > */}
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="username">
@@ -65,17 +99,17 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             </Label>
             <Input
               id="username"
-              placeholder="mahmoud"
-              type="username"
+              placeholder="username"
+              type="text"
               autoCapitalize="none"
-              autoComplete="username"
+              autoComplete="off"
               autoCorrect="off"
               disabled={isLoading}
               {...register("username")}
             />
             {errors?.username && (
               <p className="px-1 text-xs text-red-600">
-                {errors.username.message}
+                {errors.username.message ?? "Something went wrong."}
               </p>
             )}
           </div>

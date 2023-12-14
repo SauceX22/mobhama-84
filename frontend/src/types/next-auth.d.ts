@@ -23,6 +23,7 @@ declare module "next-auth" {
   export interface User extends DefaultUser {
     id: UserId;
     phoneNum: string;
+    avatar: string;
     role: UserRole;
     status: UserStatus;
   }
