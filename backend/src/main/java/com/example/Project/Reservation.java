@@ -6,82 +6,99 @@ import java.util.UUID;
 public class Reservation {
     String id;
     Machine machine;
-    Team team;
+    Project project;
     LocalDateTime startTime;
     LocalDateTime endTime;
     User bookedBy;
     LocalDateTime bookedOn;
     Status status;
+
     enum Status {
         Upcoming,
         Passed
     }
-    Reservation(String id, Machine machine, Team team, LocalDateTime startTime, LocalDateTime endTime){
+
+    Reservation(String id, Machine machine, Project project, LocalDateTime startTime, LocalDateTime endTime) {
         this.id = id;
         this.machine = machine;
-        this.team = team;
+        this.project = project;
         this.startTime = startTime;
         this.endTime = endTime;
     }
-    Reservation(String id, Machine machine, Team team, String startTime, String endTime){
+
+    Reservation(String id, Machine machine, Project project, String startTime, String endTime) {
         this.id = id;
         this.machine = machine;
-        this.team = team;
+        this.project = project;
         this.startTime = LocalDateTime.parse(startTime);
         this.endTime = LocalDateTime.parse(endTime);
     }
-    public static Reservation create(Machine machine, Team team, String startTime, String endTime){
+
+    public static Reservation create(Machine machine, Project project, String startTime, String endTime) {
         // LocalDateTime start = formatDate(startTime);
         // LocalDateTime end = formatDate(endTime);
         try {
             LocalDateTime start = LocalDateTime.parse(startTime);
             LocalDateTime end = LocalDateTime.parse(endTime);
-            if (start.isAfter(end) || start.equals(end)) return null;
-            if (start.isBefore(LocalDateTime.now())) return null;
-            return new Reservation(UUID.randomUUID().toString(), machine, team, start, end);
-        }catch (Exception e) {
+            if (start.isAfter(end) || start.equals(end))
+                return null;
+            if (start.isBefore(LocalDateTime.now()))
+                return null;
+            return new Reservation(UUID.randomUUID().toString(), machine, project, start, end);
+        } catch (Exception e) {
             return null;
         }
 
     }
-    public void setMachine(Machine machine){
+
+    public void setMachine(Machine machine) {
         this.machine = machine;
     }
-    public Machine getMachine(){
+
+    public Machine getMachine() {
         return machine;
     }
-    public void setTeam(Team team){
-        this.team = team;
-    }
-    public Team getTeam(){
-        return team;
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    private static LocalDateTime formatDate(String dateTime){
-        //date Format: yy-mm-ddThh:mm:ss
+    public Project getProject() {
+        return project;
+    }
+
+    private static LocalDateTime formatDate(String dateTime) {
+        // date Format: yy-mm-ddThh:mm:ss
         String[] split = dateTime.split("T");
         String[] date = split[0].split("-");
         String[] time = split[1].split(":");
-        return LocalDateTime.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]),Integer.parseInt(date[1]),Integer.parseInt(time[0]), Integer.parseInt(time[1]));
+        return LocalDateTime.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[1]),
+                Integer.parseInt(time[0]), Integer.parseInt(time[1]));
     }
-    public LocalDateTime getStartTime(){
+
+    public LocalDateTime getStartTime() {
         return startTime;
     }
-    public LocalDateTime getEndTime(){
+
+    public LocalDateTime getEndTime() {
         return endTime;
     }
+
     // ????????????????????????????
     @Override
     public boolean equals(Object obj) {
-        return id.equals(((Reservation)obj).id);
+        return id.equals(((Reservation) obj).id);
     }
+
     public void setBookedBy(User bookedBy) {
         this.bookedBy = bookedBy;
     }
+
     public void setBookedOn(LocalDateTime bookedOn) {
         this.bookedOn = bookedOn;
         setStatus();
     }
+
     public void setStatus() {
         if (LocalDateTime.now().isAfter(endTime)) {
             status = Status.Passed;
@@ -89,24 +106,29 @@ public class Reservation {
             status = Status.Upcoming;
         }
     }
+
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
+
     public void setId(String id) {
         this.id = id;
     }
+
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
-    
+
     public User getBookedBy() {
         return bookedBy;
     }
+
     public LocalDateTime getBookedOn() {
         return bookedOn;
     }
+
     public String getId() {
         return id;
     }
-    
+
 }

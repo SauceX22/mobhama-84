@@ -5,37 +5,43 @@ import java.util.UUID;
 public class Project {
     private String name;
     private Team team;
-    private String projectID;
+    private String id;
 
-    Project(String name, Team team, String projectID) {
+    Project(String name, Team team, String id) {
         this.name = name;
         this.team = team;
-        this.projectID = projectID;
+        this.id = id;
     }
-    Project(){
+
+    Project() {
         this.name = "Project";
     }
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public Team getTeam(){
+
+    public Team getTeam() {
         return team;
     }
-    public String getProjectId(){
-        return projectID;
+
+    public String getId() {
+        return id;
     }
-    public static Project create(String name, Team team){
+
+    public static Project create(String name, Team team) {
         return new Project(name, team, UUID.randomUUID().toString());
     }
-    
-    public void assignTeam(Team team){
+
+    public void assignTeam(Team team) {
         this.team = team;
     }
-    public void unassignTeam(){
+
+    public void unassignTeam() {
         this.team = null;
     }
 }
-

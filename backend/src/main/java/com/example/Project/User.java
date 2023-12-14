@@ -9,7 +9,9 @@ abstract public class User {
     protected String email;
     protected String avatar;
     protected Role role;
-    enum Role{
+    protected String researchInterest;
+
+    enum Role {
         ADMIN,
         TEAM_MEMBER,
     }
@@ -17,20 +19,24 @@ abstract public class User {
     public User() {
         this.id = UUID.randomUUID().toString();
     }
-    public User(String name, String PhoneNum, String email, String id, String avatar){
+
+    public User(String name, String PhoneNum, String email, String id, String avatar) {
         this.avatar = avatar;
         this.name = name;
         this.PhoneNum = PhoneNum;
         this.email = email;
         this.id = id;
     }
-    public void createID(){
+
+    public void createID() {
         this.id = UUID.randomUUID().toString();
     }
-    public void signIn(){
-        
+
+    public void signIn() {
+
     }
-    public String getId(){
+
+    public String getId() {
         return id;
     }
 
@@ -46,6 +52,14 @@ abstract public class User {
         return PhoneNum;
     }
 
+    public String getResearchInterest() {
+        return researchInterest;
+    }
+
+    public void setResearchInterest(String researchInterest) {
+        this.researchInterest = researchInterest;
+    }
+
     public void setPhoneNum(String phoneNum) {
         PhoneNum = phoneNum;
     }
@@ -57,13 +71,20 @@ abstract public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
     public String getAvatar() {
         return avatar;
     }
-    public Role getRole(){
+
+    public Role getRole() {
         return role;
+    }
+
+    public void setRole(Role role2) {
+        this.role = role2;
     }
 }

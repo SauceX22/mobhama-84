@@ -1,6 +1,5 @@
 package com.example.Project;
 
-
 import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
@@ -24,6 +23,7 @@ public class UserControl {
         }
         return ResponseEntity.ok(user);
     }
+
     @GetMapping("/{id}/teams")
     public ResponseEntity<ArrayList<Team>> getUserTeams(@PathVariable String id) {
         try {
@@ -37,7 +37,9 @@ public class UserControl {
     }
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String role, @RequestParam String researchInterest, @RequestParam(defaultValue = "https://avatars.githubusercontent.com/u/13651651?v=4") String avatar) {
+    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String phoneNum,
+            @RequestParam String email, @RequestParam String role, @RequestParam String researchInterest,
+            @RequestParam(defaultValue = "https://avatars.githubusercontent.com/u/13651651?v=4") String avatar) {
         if (avatar.isEmpty() || avatar.isBlank()) {
             avatar = "https://avatars.githubusercontent.com/u/13651651?v=4";
         }
@@ -54,17 +56,31 @@ public class UserControl {
             return ResponseEntity.ok(user);
         }
     }
-    
-
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestParam String name, @RequestParam String phoneNum, @RequestParam String email, @RequestParam String researchInterest, @RequestParam String avatar) {
-        
-        User newUser = DataBase.updateUserInfo(id, name, phoneNum, email, researchInterest, avatar);
+    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestParam String name,
+            @RequestParam String phoneNum, @RequestParam String email, @RequestParam String researchInterest,
+            @RequestParam String avatar, @RequestParam String role) {
+
+        User newUser = DataBase.updateUserInfo(id, name, phoneNum, email, researchInterest, avatar, role);
         if (newUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-       
+
+        return ResponseEntity.ok(newUser);
+    }
+
+    // put endpoint to update user role
+    @PutMapping("/{id}/role")
+    public ResponseEntity<User> updateUserRole(@PathVariable String id, @RequestParam String role) {
+        // find user through id, if not found, return 404, if found, updateUserInfo and
+        // pass new role
+        User user = DataBase.getUserInfo(id);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        User newUser = DataBase.updateUserInfo(id, user.getName(), user.getPhoneNum(), user.getEmail(),
+                user.getResearchInterest(), user.getAvatar(), role);
         return ResponseEntity.ok(newUser);
     }
 
@@ -77,6 +93,5 @@ public class UserControl {
         }
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
-    
 
 }

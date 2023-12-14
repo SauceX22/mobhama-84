@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
     // Projects
     @GetMapping()
@@ -20,7 +20,6 @@ public class ProjectController {
     public ResponseEntity<Project> createProject(@RequestParam String name, @RequestParam String teamId) {
         Team team = DataBase.getTeamById(teamId);
 
-        
         if (team == null) {
             System.out.println("team not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -39,7 +38,7 @@ public class ProjectController {
         }
         return ResponseEntity.ok(project);
     }
-    
+
     @PutMapping("/{id}")
     public ResponseEntity<Project> assignTeamToProject(@PathVariable String id, @RequestParam String teamId) {
         Project project = DataBase.getProjectById(id);
@@ -56,6 +55,22 @@ public class ProjectController {
         return ResponseEntity.ok(project);
     }
 
+    @GetMapping("/{id}/schedule")
+    public ResponseEntity<Schedule> getProjectSchedule(@RequestParam String projectId) {
+        Project project = DataBase.getProjectById(projectId);
+        if (project == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Schedule schedule = new Schedule();
+        ArrayList<Reservation> reservations = DataBase.getProjectReservations(projectId);
+        if (reservations == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        schedule.setReservations(reservations);
+        schedule.setProject(project);
+        return ResponseEntity.ok(schedule);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteProject(@PathVariable String id) {
         Project project = DataBase.getProjectById(id);
@@ -66,13 +81,13 @@ public class ProjectController {
         return ResponseEntity.ok(true);
     }
 
-    
     // @RequestMapping("/getProjectById")
-    // public ResponseEntity<Project> getProjectById(@RequestParam String projectId) {
-    //     Project project = DataBase.getProjectById(projectId);
-    //     if (project == null) {
-    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //     }
-    //     return ResponseEntity.ok(project);
+    // public ResponseEntity<Project> getProjectById(@RequestParam String projectId)
+    // {
+    // Project project = DataBase.getProjectById(projectId);
+    // if (project == null) {
+    // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    // }
+    // return ResponseEntity.ok(project);
     // }
 }

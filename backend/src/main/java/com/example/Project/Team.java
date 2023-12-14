@@ -9,7 +9,7 @@ public class Team {
     private ArrayList<User> members;
     private ArrayList<String> projectIds;
 
-    Team(String name, String id){
+    Team(String name, String id) {
         this();
         this.name = name;
         this.id = id;
@@ -20,20 +20,23 @@ public class Team {
         this.projectIds = new ArrayList<String>();
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
-    
+
     }
+
     public void setMembers(ArrayList<User> members) {
         this.members = members;
     }
-    public void addMember(User member){
+
+    public void addMember(User member) {
         members.add(member);
     }
+
     public ArrayList<User> getMembers() {
         return members;
     }
@@ -41,35 +44,41 @@ public class Team {
     public ArrayList<String> getProjectIds() {
         return projectIds;
     }
-    
-    public static Team create(String name){
+
+    public static Team create(String name) {
         return new Team(name, UUID.randomUUID().toString());
     }
 
-    public static Team create(){
+    public static Team create() {
         return new Team();
     }
 
-    public String getTeamId(){
+    public String getTeamId() {
         return id;
     }
-    public void unassignMember(User member){
+
+    public void unassignMember(User member) {
         members.remove(member);
     }
-    
-    public void addMember(TeamMember member){
-        if (!members.contains(member)) members.add(member);
+
+    public void addMember(TeamMember member) {
+        if (!members.contains(member))
+            members.add(member);
     }
-    public void removeMember(TeamMember member){
+
+    public void removeMember(TeamMember member) {
         members.remove(member);
     }
-    public void addProject(Project project){
-        projectIds.add(project.getProjectId());
+
+    public void addProject(Project project) {
+        projectIds.add(project.getId());
     }
-    public void removeProject(Project project){
-        projectIds.remove(project.getProjectId());
+
+    public void removeProject(Project project) {
+        projectIds.remove(project.getId());
     }
-    public String getId(){
+
+    public String getId() {
         return id;
     }
-    }
+}
