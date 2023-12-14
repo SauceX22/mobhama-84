@@ -25,7 +25,7 @@ export const reservationRouter = createTRPCRouter({
   getReservations: protectedProcedure
     .input(z.object({ projectId: z.string().min(1) }))
     .query(async () => {
-      const response = await fetch("localhost:8080/api/reservations", {
+      const response = await fetch("localhost:8080/reservations", {
         method: "GET",
       });
 
