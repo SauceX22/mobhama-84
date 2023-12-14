@@ -28,7 +28,7 @@ export default async function DashboardLayout({
           <UserAccountNav
             user={{
               name: user.name,
-              image: user.image,
+              image: user.avatar,
               email: user.email,
             }}
           />
