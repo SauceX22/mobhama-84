@@ -11,7 +11,7 @@ public class Main {
 
     @RequestMapping("/login")
     public ResponseEntity<User> login(@RequestParam String username) {
-       User user = DataBase.getUserInfo(username);
+       User user = DataBase.getUserByName(username);
          if (user == null) {
               return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
