@@ -41,7 +41,7 @@ public class DataBase {
                 String data = reader.nextLine();
                 String[] dataArr = data.split(",");
                 Team team = getTeam(dataArr[2]);
-                Project project = new Project(dataArr[1], team, dataArr[2]);
+                Project project = new Project(dataArr[1], team, dataArr[0]);
                 if (team != null) {
                     team.getProjectIds().add(project.getId());
                 }
@@ -175,6 +175,16 @@ public class DataBase {
             }
         }
         return null;
+    }
+
+    public static ArrayList<Project> getProjectsByUserId(String id) {
+        ArrayList<Project> userProjects = new ArrayList<>();
+        for (Project project : projects) {
+            if (project.getTeam().getMembers().contains(getUserInfo(id))) {
+                userProjects.add(project);
+            }
+        }
+        return userProjects;
     }
 
     public static Project getProjectById(String id) {
@@ -533,6 +543,16 @@ public class DataBase {
     public static ArrayList<Reservation> getReservations() {
         updateReservationStatus();
         return reservations;
+    }
+
+    public static ArrayList<Reservation> getReservations(String projectId) {
+        ArrayList<Reservation> projectReservations = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+            if (reservation.getProject().getId().equals(projectId)) {
+                projectReservations.add(reservation);
+            }
+        }
+        return projectReservations;
     }
 
     public static void updateReservationStatus() {

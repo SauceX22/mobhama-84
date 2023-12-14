@@ -31,8 +31,8 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProject(@PathVariable String id) {
-        Project project = DataBase.getProjectById(id);
+    public ResponseEntity<Project> getProject(@PathVariable String projectId) {
+        Project project = DataBase.getProjectById(projectId);
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -55,14 +55,23 @@ public class ProjectController {
         return ResponseEntity.ok(project);
     }
 
+    @GetMapping("/{id}/reservations")
+    public ResponseEntity<ArrayList<Reservation>> getReservationsByProjectId(@PathVariable String id) {
+        ArrayList<Reservation> reservations = DataBase.getReservations(id);
+        if (reservations == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(reservations);
+    }
+
     @GetMapping("/{id}/schedule")
-    public ResponseEntity<Schedule> getProjectSchedule(@RequestParam String projectId) {
-        Project project = DataBase.getProjectById(projectId);
+    public ResponseEntity<Schedule> getProjectSchedule(@PathVariable String id) {
+        Project project = DataBase.getProjectById(id);
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Schedule schedule = new Schedule();
-        ArrayList<Reservation> reservations = DataBase.getProjectReservations(projectId);
+        ArrayList<Reservation> reservations = DataBase.getProjectReservations(id);
         if (reservations == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

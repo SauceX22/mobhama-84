@@ -24,6 +24,15 @@ public class UserControl {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/{id}/projects")
+    public ResponseEntity<ArrayList<Project>> getProjectsByUserId(@PathVariable String id) {
+        ArrayList<Project> projects = DataBase.getProjectsByUserId(id);
+        if (projects == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(projects);
+    }
+
     @GetMapping("/{id}/teams")
     public ResponseEntity<ArrayList<Team>> getUserTeams(@PathVariable String id) {
         try {
