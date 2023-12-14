@@ -15,26 +15,11 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  // const posts = await db.post.findMany({
-  //   where: {
-  //     authorId: user.id,
-  //   },
-  //   select: {
-  //     id: true,
-  //     title: true,
-  //     published: true,
-  //     createdAt: true,
-  //   },
-  //   orderBy: {
-  //     updatedAt: "desc",
-  //   },
-  // })
-
   return (
     <DashboardShell>
       <DashboardHeader
         heading="Overview"
-        text="Have a genearl look at this week's schedule."
+        text="Have a general look at this week's schedule."
       />
       <div></div>
     </DashboardShell>
