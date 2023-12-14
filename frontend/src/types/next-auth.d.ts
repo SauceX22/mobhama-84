@@ -4,7 +4,7 @@ import { JWT } from "next-auth/jwt";
 export type UserId = string;
 
 declare module "next-auth/jwt" {
-  interface JWT {
+  interface JWT extends DefaultUser {
     id: UserId;
   }
 }

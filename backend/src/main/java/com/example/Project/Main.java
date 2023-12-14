@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class Main {
 
-
     @RequestMapping("/login")
     public ResponseEntity<User> login(@RequestParam String username) {
        User user = DataBase.getUserByName(username);
